@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 
 import './globals.css';
 
+// eslint-disable-next-line
 export const metadata: Metadata = {
   title: 'Luuk Leenders',
   description: 'The resume of Luuk Leenders',

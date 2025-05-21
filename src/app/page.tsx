@@ -86,21 +86,27 @@ export default function Home() {
     if (!windowSize.width) return;
     if (windowSize.width <= 320) {
       if (isOpen) {
-        setButtonX(windowSize.width - 72);
+        setButtonX(windowSize.width - 56);
       } else {
-        setButtonX(312);
+        setButtonX(16);
       }
-    }
-
-    if (isOpen) {
-      setButtonX(296);
+    } else if (windowSize.width <= 1024) {
+      if (isOpen) {
+        setButtonX(296);
+      } else {
+        setButtonX(8);
+      }
     } else {
-      setButtonX(32);
+      if (isOpen) {
+        setButtonX(296);
+      } else {
+        setButtonX(24);
+      }
     }
   }, [windowSize.width, isOpen]);
 
   return (
-    <div className='relative flex h-screen w-screen flex-row bg-slate-100 py-0 lg:py-8'>
+    <div className='relative flex h-dvh w-screen flex-row bg-slate-100 py-0 lg:py-8'>
       <div className='relative mx-auto flex w-full overflow-hidden lg:max-w-[1024px] xl:max-w-[1280px]'>
         <motion.button
           initial={{ x: 296 }}
@@ -155,7 +161,7 @@ export default function Home() {
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           className='relative flex h-full flex-col bg-white'
         >
-          <div className='z-20 flex min-h-[165px] items-center justify-start bg-white/30 px-4 backdrop-blur-lg md:min-h-[180px] lg:min-h-[200px] lg:px-8 xl:min-h-[220px] 2xl:min-h-[264px]'>
+          <div className='z-20 flex items-center justify-start bg-white/30 px-4 pt-16 pb-10 backdrop-blur-lg md:pt-18 md:pb-14 lg:px-8 lg:pt-20 lg:pb-16 xl:pt-22 xl:pb-16 2xl:py-22'>
             <Title />
           </div>
 
