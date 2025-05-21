@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { SquareArrowOutUpRight } from 'lucide-react';
 import { useEffect, useState, type PropsWithChildren } from 'react';
 
 type InfoListProps = PropsWithChildren<{
@@ -25,6 +26,7 @@ export function InfoList({ children, title }: InfoListProps) {
 
 export function InfoListItem({ label, value, metaLabel, metaValue, footnote }: InfoListItemProps) {
   const [text, setText] = useState<string>('');
+  const [isLink, setIsLink] = useState<boolean>(false);
 
   const labelClassName = classNames('text-base font-semibold text-slate-900', {
     '-mb-1': !metaLabel || (metaLabel && footnote),
@@ -35,6 +37,10 @@ export function InfoListItem({ label, value, metaLabel, metaValue, footnote }: I
       setText(value.join(', '));
     } else if (value) {
       setText(value);
+    }
+
+    if (value && value.includes('https')) {
+      setIsLink(true);
     }
   }, [value]);
 
@@ -47,7 +53,18 @@ export function InfoListItem({ label, value, metaLabel, metaValue, footnote }: I
         </p>
       )}
       <p className={labelClassName}>{label}</p>
-      {text && <p className='text-base text-slate-500'>{text}</p>}
+      {text && !isLink && <p className='text-base text-slate-500'>{text}</p>}
+      {text && isLink && (
+        <a
+          href={text}
+          target='_blank'
+          rel='noopener noreferrer'
+          className='relative block w-fit text-base text-slate-500 after:-bottom-px after:left-0 after:block after:h-px after:w-full after:bg-slate-500 after:opacity-0 after:transition-opacity after:content-[""] hover:after:opacity-100'
+        >
+          <SquareArrowOutUpRight width={12} height={12} className='absolute top-[7px] -left-4' />
+          {text.replace('https://', '')}
+        </a>
+      )}
       {footnote && <p className='text-xs text-slate-500'>{footnote}</p>}
     </div>
   );
