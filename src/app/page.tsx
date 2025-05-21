@@ -12,15 +12,58 @@ import { ProfilePicture } from '@components/ProfilePicture';
 import { Sidebar } from '@components/Sidebar';
 import { Title } from '@components/Title';
 
-import education from '@data/education.json';
-import experience from '@data/experience.json';
-import personal from '@data/personal.json';
-import skills from '@data/skills.json';
+import { Education, Experience as ExperienceType, Personal, Skill } from '../db/types';
+
+async function getPersonalData() {
+  const res = await fetch('http://localhost:3000/api/personal');
+  if (!res.ok) throw new Error('Failed to fetch personal data');
+  return res.json();
+}
+
+async function getSkillsData() {
+  const res = await fetch('http://localhost:3000/api/skills');
+  if (!res.ok) throw new Error('Failed to fetch skills data');
+  return res.json();
+}
+
+async function getEducationData() {
+  const res = await fetch('http://localhost:3000/api/education');
+  if (!res.ok) throw new Error('Failed to fetch education data');
+  return res.json();
+}
+
+async function getExperienceData() {
+  const res = await fetch('http://localhost:3000/api/experience');
+  if (!res.ok) throw new Error('Failed to fetch experience data');
+  return res.json();
+}
 
 export default function Home() {
   const windowSize = useWindowSize();
   const [isOpen, setIsOpen] = useState(true);
   const [buttonX, setButtonX] = useState(296);
+  const [personal, setPersonal] = useState<Personal[]>([]);
+  const [skills, setSkills] = useState<Skill[]>([]);
+  const [education, setEducation] = useState<Education[]>([]);
+  const [experiences, setExperiences] = useState<ExperienceType[]>([]);
+
+  useEffect(() => {
+    getPersonalData().then((data) => {
+      setPersonal(data);
+    });
+
+    getSkillsData().then((data) => {
+      setSkills(data);
+    });
+
+    getEducationData().then((data) => {
+      setEducation(data);
+    });
+
+    getExperienceData().then((data) => {
+      setExperiences(data);
+    });
+  }, []);
 
   const iconClassName = classNames(
     'h-12 w-12 fill-slate-600 stroke-slate-200 transition-transform duration-300',
@@ -76,14 +119,14 @@ export default function Home() {
 
           <div className='relative z-10 -mt-[150px] flex flex-col overflow-y-auto px-4 pt-[150px] [scrollbar-width:none] lg:px-8 [&::-webkit-scrollbar]:hidden'>
             <InfoList title='Personal'>
-              {Object.entries(personal).map(([key, value]) => (
-                <InfoListItem key={key} label={key} value={value} />
+              {personal.map((item) => (
+                <InfoListItem key={item.key} label={item.key} value={item.value} />
               ))}
             </InfoList>
 
             <InfoList title='Skills'>
-              {Object.entries(skills).map(([key, value]) => (
-                <InfoListItem key={key} label={key} value={value} />
+              {skills.map((skill) => (
+                <InfoListItem key={skill.category} label={skill.category} value={skill.items} />
               ))}
             </InfoList>
 
@@ -93,7 +136,8 @@ export default function Home() {
                   key={item.label}
                   label={item.label}
                   footnote={item.footnote}
-                  meta={item.meta}
+                  metaLabel={item.metaLabel}
+                  metaValue={item.metaValue}
                 />
               ))}
             </InfoList>
@@ -117,7 +161,7 @@ export default function Home() {
 
           <div className='z-10 -mt-[150px] flex flex-col overflow-y-auto px-4 pt-[150px] [scrollbar-width:none] lg:px-8 [&::-webkit-scrollbar]:hidden'>
             <Experience>
-              {experience.map((item) => (
+              {experiences.map((item) => (
                 <ExperienceItem key={item.company} {...item} />
               ))}
 

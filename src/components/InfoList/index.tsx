@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import type { PropsWithChildren } from 'react';
+import { useEffect, useState, type PropsWithChildren } from 'react';
 
 type InfoListProps = PropsWithChildren<{
   className?: string;
@@ -8,12 +8,10 @@ type InfoListProps = PropsWithChildren<{
 
 type InfoListItemProps = {
   label: string;
-  value?: string;
-  footnote?: string;
-  meta?: {
-    label: string;
-    value: string;
-  };
+  value?: string | string[];
+  footnote?: string | null;
+  metaLabel?: string | null;
+  metaValue?: string | null;
 };
 
 export function InfoList({ children, title }: InfoListProps) {
@@ -25,21 +23,31 @@ export function InfoList({ children, title }: InfoListProps) {
   );
 }
 
-export function InfoListItem({ label, value, meta, footnote }: InfoListItemProps) {
+export function InfoListItem({ label, value, metaLabel, metaValue, footnote }: InfoListItemProps) {
+  const [text, setText] = useState<string>('');
+
   const labelClassName = classNames('text-base font-semibold text-slate-900', {
-    '-mb-1': !meta || (meta && footnote),
+    '-mb-1': !metaLabel || (metaLabel && footnote),
   });
+
+  useEffect(() => {
+    if (Array.isArray(value)) {
+      setText(value.join(', '));
+    } else if (value) {
+      setText(value);
+    }
+  }, [value]);
 
   return (
     <div className='relative mb-1'>
-      {meta && (
+      {metaLabel && metaValue && (
         <p className='relative -bottom-1 text-xs text-slate-500'>
-          <span className='font-semibold text-slate-900'>{meta.label} | </span>
-          {meta.value}
+          <span className='font-semibold text-slate-900'>{metaLabel} | </span>
+          {metaValue}
         </p>
       )}
       <p className={labelClassName}>{label}</p>
-      {value && <p className='text-base text-slate-500'>{value}</p>}
+      {text && <p className='text-base text-slate-500'>{text}</p>}
       {footnote && <p className='text-xs text-slate-500'>{footnote}</p>}
     </div>
   );
