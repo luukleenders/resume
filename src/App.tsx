@@ -18,7 +18,7 @@ import skills from './data/skills.json';
 function App() {
   const windowSize = useWindowSize();
   const [isOpen, setIsOpen] = useState(true);
-  const [buttonX, setButtonX] = useState(320);
+  const [buttonX, setButtonX] = useState(296);
 
   const iconClassName = classNames(
     'h-12 w-12 fill-slate-600 stroke-slate-200 transition-transform duration-300',
@@ -34,7 +34,7 @@ function App() {
 
   useEffect(() => {
     if (!windowSize.width) return;
-    setIsOpen(windowSize.width >= 1280);
+    setIsOpen(windowSize.width >= 1024);
   }, [windowSize.width]);
 
   useEffect(() => {
@@ -46,26 +46,33 @@ function App() {
         setButtonX(312);
       }
     }
+
+    if (isOpen) {
+      setButtonX(296);
+    } else {
+      setButtonX(32);
+    }
   }, [windowSize.width, isOpen]);
 
   return (
-    <div className='flex h-screen w-screen flex-row bg-slate-100 py-0 lg:py-8'>
-      <div className='relative container mx-auto flex overflow-hidden'>
-        <Sidebar isOpen={isOpen}>
-          <motion.button
-            initial={{ x: 320 }}
-            animate={{ x: buttonX }}
-            className='absolute top-4 cursor-pointer'
-            onClick={handleToggle}
-          >
-            <CircleArrowLeft className={iconClassName} />
-          </motion.button>
+    <div className='relative flex h-screen w-screen flex-row bg-slate-100 py-0 lg:py-8'>
+      <div className='relative mx-auto flex w-full overflow-hidden lg:max-w-[1024px] xl:max-w-[1280px]'>
+        <motion.button
+          initial={{ x: 296 }}
+          animate={{ x: buttonX }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          className='absolute top-4 z-30 cursor-pointer'
+          onClick={handleToggle}
+        >
+          <CircleArrowLeft className={iconClassName} />
+        </motion.button>
 
-          <div className='relative mx-auto py-8'>
+        <Sidebar isOpen={isOpen}>
+          <div className='relative z-20 flex w-full items-center justify-center bg-slate-200/30 px-4 py-8 backdrop-blur-lg lg:px-8'>
             <ProfilePicture />
           </div>
 
-          <div className='relative z-10 flex flex-col overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
+          <div className='relative z-10 -mt-[150px] flex flex-col overflow-y-auto px-4 pt-[150px] [scrollbar-width:none] lg:px-8 [&::-webkit-scrollbar]:hidden'>
             <InfoList title='Personal'>
               {Object.entries(personal).map(([key, value]) => (
                 <InfoListItem key={key} label={key} value={value} />
@@ -88,6 +95,8 @@ function App() {
                 />
               ))}
             </InfoList>
+
+            <div className='min-h-12' />
           </div>
         </Sidebar>
 
@@ -95,17 +104,19 @@ function App() {
           initial={{ width: 'calc(100%)', x: 320 }}
           animate={{ width: isOpen ? 'calc(100%)' : '100%', x: isOpen ? 320 : 0 }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          className='flex h-full flex-col bg-white'
+          className='relative flex h-full flex-col bg-white'
         >
-          <div className='flex items-center justify-start px-4 pt-16 pb-8 lg:min-h-[264px] lg:px-8'>
+          <div className='z-20 flex min-h-[165px] items-center justify-start bg-white/30 px-4 backdrop-blur-lg md:min-h-[180px] lg:min-h-[200px] lg:px-8 xl:min-h-[220px] 2xl:min-h-[264px]'>
             <Title />
           </div>
 
-          <div className='flex flex-col overflow-y-auto px-4 [scrollbar-width:none] lg:px-8 [&::-webkit-scrollbar]:hidden'>
+          <div className='z-10 -mt-[150px] flex flex-col overflow-y-auto px-4 pt-[150px] [scrollbar-width:none] lg:px-8 [&::-webkit-scrollbar]:hidden'>
             <Experience>
               {experience.map((item) => (
                 <ExperienceItem key={item.company} {...item} />
               ))}
+
+              <div className='min-h-12' />
             </Experience>
           </div>
         </motion.div>
