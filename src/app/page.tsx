@@ -153,9 +153,8 @@ export default function Home() {
         </Sidebar>
 
         <motion.div
-          initial={{ width: 'calc(100%)', x: 320 }}
+          initial={{ x: 320 }}
           animate={{
-            width: isOpen ? 'calc(100%)' : '100%',
             x: isOpen ? 320 : 0,
           }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
@@ -165,7 +164,7 @@ export default function Home() {
             <Title />
           </div>
 
-          <div className='z-10 -mt-[150px] flex flex-col overflow-y-auto px-4 pt-[150px] [scrollbar-width:none] lg:px-8 [&::-webkit-scrollbar]:hidden'>
+          <div className='z-10 -mt-[150px] flex flex-col overflow-y-auto px-4 pt-[150px] [scrollbar-width:none] lg:max-w-[700px] lg:px-8 xl:max-w-[960px] [&::-webkit-scrollbar]:hidden'>
             <Experience>
               {experiences.map((item) => (
                 <ExperienceItem key={item.company} {...item} />
