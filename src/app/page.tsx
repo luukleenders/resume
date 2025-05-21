@@ -15,25 +15,25 @@ import { Title } from '@components/Title';
 import { Education, Experience as ExperienceType, Personal, Skill } from '../db/types';
 
 async function getPersonalData() {
-  const res = await fetch('http://localhost:3000/api/personal');
+  const res = await fetch('/api/personal');
   if (!res.ok) throw new Error('Failed to fetch personal data');
   return res.json();
 }
 
 async function getSkillsData() {
-  const res = await fetch('http://localhost:3000/api/skills');
+  const res = await fetch('/api/skills');
   if (!res.ok) throw new Error('Failed to fetch skills data');
   return res.json();
 }
 
 async function getEducationData() {
-  const res = await fetch('http://localhost:3000/api/education');
+  const res = await fetch('/api/education');
   if (!res.ok) throw new Error('Failed to fetch education data');
   return res.json();
 }
 
 async function getExperienceData() {
-  const res = await fetch('http://localhost:3000/api/experience');
+  const res = await fetch('/api/experience');
   if (!res.ok) throw new Error('Failed to fetch experience data');
   return res.json();
 }
