@@ -40,6 +40,7 @@ async function getExperienceData() {
 
 export default function Home() {
   const windowSize = useWindowSize();
+  const [isMobile, setIsMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
   const [buttonX, setButtonX] = useState(296);
   const [personal, setPersonal] = useState<Personal[]>([]);
@@ -85,18 +86,24 @@ export default function Home() {
   useEffect(() => {
     if (!windowSize.width) return;
     if (windowSize.width <= 320) {
+      setIsMobile(true);
+
       if (isOpen) {
         setButtonX(windowSize.width - 56);
       } else {
         setButtonX(16);
       }
     } else if (windowSize.width <= 1024) {
+      setIsMobile(true);
+
       if (isOpen) {
         setButtonX(296);
       } else {
         setButtonX(8);
       }
     } else {
+      setIsMobile(false);
+
       if (isOpen) {
         setButtonX(296);
       } else {
@@ -153,18 +160,19 @@ export default function Home() {
         </Sidebar>
 
         <motion.div
-          initial={{ x: 320 }}
+          initial={{ maxWidth: 'calc(100% - 0)', x: 320 }}
           animate={{
+            maxWidth: isOpen ? `calc(100% - ${isMobile ? '0px' : '320px'})` : 'calc(100% - 0px)',
             x: isOpen ? 320 : 0,
           }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          className='relative flex h-full flex-col bg-white'
+          className='relative flex h-full grow flex-col bg-white'
         >
-          <div className='z-20 flex items-center justify-start bg-white/30 px-4 pt-16 pb-10 backdrop-blur-lg md:pt-18 md:pb-14 lg:px-8 lg:pt-20 lg:pb-16 xl:pt-22 xl:pb-16 2xl:py-22'>
+          <div className='z-20 flex items-center justify-start bg-white/30 px-4 pt-16 pb-10 backdrop-blur-lg md:pt-16 md:pb-12 lg:px-8 2xl:py-15'>
             <Title />
           </div>
 
-          <div className='z-10 -mt-[150px] flex flex-col overflow-y-auto px-4 pt-[150px] [scrollbar-width:none] lg:max-w-[700px] lg:px-8 xl:max-w-[960px] [&::-webkit-scrollbar]:hidden'>
+          <div className='z-10 -mt-[150px] flex flex-col overflow-y-auto px-4 pt-[150px] [scrollbar-width:none] lg:px-8 [&::-webkit-scrollbar]:hidden'>
             <Experience>
               {experiences.map((item) => (
                 <ExperienceItem key={item.company} {...item} />
