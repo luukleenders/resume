@@ -1,6 +1,6 @@
 @import url('https://use.typekit.net/die1owr.css');
 
-@import 'tailwindcss';
+@import "tailwindcss";
 
 :root {
   font-family: proxima-nova, sans-serif;
@@ -22,3 +22,4 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+

@@ -1,21 +1,23 @@
+'use client';
+
+import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
+import { useWindowSize } from '@uidotdev/usehooks';
 import classNames from 'classnames';
 import { CircleArrowLeft } from 'lucide-react';
-import { motion } from 'motion/react';
-import { useWindowSize } from '@uidotdev/usehooks';
 
-import { Experience, ExperienceItem } from './components/Experience';
-import { InfoList, InfoListItem } from './components/InfoList';
-import { ProfilePicture } from './components/ProfilePicture';
-import { Sidebar } from './components/Sidebar';
-import { Title } from './components/Title';
+import { Experience, ExperienceItem } from '@components/Experience';
+import { InfoList, InfoListItem } from '@components/InfoList';
+import { ProfilePicture } from '@components/ProfilePicture';
+import { Sidebar } from '@components/Sidebar';
+import { Title } from '@components/Title';
 
-import education from './data/education.json';
-import experience from './data/experience.json';
-import personal from './data/personal.json';
-import skills from './data/skills.json';
+import education from '@data/education.json';
+import experience from '@data/experience.json';
+import personal from '@data/personal.json';
+import skills from '@data/skills.json';
 
-function App() {
+export default function Home() {
   const windowSize = useWindowSize();
   const [isOpen, setIsOpen] = useState(true);
   const [buttonX, setButtonX] = useState(296);
@@ -102,7 +104,10 @@ function App() {
 
         <motion.div
           initial={{ width: 'calc(100%)', x: 320 }}
-          animate={{ width: isOpen ? 'calc(100%)' : '100%', x: isOpen ? 320 : 0 }}
+          animate={{
+            width: isOpen ? 'calc(100%)' : '100%',
+            x: isOpen ? 320 : 0,
+          }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           className='relative flex h-full flex-col bg-white'
         >
@@ -124,5 +129,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
