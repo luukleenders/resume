@@ -1,3 +1,5 @@
+'use client';
+
 import classNames from 'classnames';
 import { SquareArrowOutUpRight } from 'lucide-react';
 import { useEffect, useState, type PropsWithChildren } from 'react';

@@ -1,7 +1,12 @@
+'use client';
+
 import type { PropsWithChildren } from 'react';
 import { motion } from 'motion/react';
 
-export function Sidebar({ children, isOpen }: PropsWithChildren<{ isOpen: boolean }>) {
+import { useDataStore } from '@store';
+
+export function Sidebar({ children }: PropsWithChildren) {
+  const { isOpen } = useDataStore();
   return (
     <motion.div
       initial={{ x: 0 }}
