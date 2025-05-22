@@ -101,8 +101,8 @@ export function InfoListItem({
           rel='noopener noreferrer'
           className='relative block w-fit text-base text-slate-500 after:-bottom-px after:left-0 after:block after:h-px after:w-full after:bg-slate-500 after:opacity-0 after:transition-opacity after:content-[""] hover:after:opacity-100'
         >
-          <SquareArrowOutUpRight width={12} height={12} className='absolute top-[7px] -left-4' />
           {text.replace('https://', '')}
+          <SquareArrowOutUpRight width={12} height={12} className='absolute top-[7px] -right-4' />
         </a>
       )}
 
