@@ -10,7 +10,7 @@ export function MainContent({ children }: PropsWithChildren) {
 
   return (
     <motion.div
-      initial={{ maxWidth: 'calc(100% - 0)', x: 320 }}
+      initial={{ maxWidth: `calc(100% - ${isMobile ? '0px' : '320px'})`, x: 320 }}
       animate={{
         maxWidth: isOpen ? `calc(100% - ${isMobile ? '0px' : '320px'})` : 'calc(100% - 0px)',
         x: isOpen ? 320 : 0,

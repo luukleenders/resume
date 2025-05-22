@@ -1,7 +1,8 @@
-import { db } from '../../../db';
-import { skills } from '../../../db/schema';
 import { NextResponse } from 'next/server';
 import { asc } from 'drizzle-orm';
+
+import { db } from '@db';
+import { skills } from '@db/schema';
 
 export async function GET() {
   try {

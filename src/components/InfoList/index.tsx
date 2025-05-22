@@ -13,7 +13,7 @@ type InfoListProps = PropsWithChildren<{
 
 type InfoListItemProps = {
   label: string;
-  value?: string | string[];
+  value?: string;
   footnote?: string | null;
   metaLabel?: string | null;
   metaValue?: string | null;
@@ -38,7 +38,7 @@ export function InfoList({ children, title }: InfoListProps) {
         <h2 className='mb-1 text-2xl font-bold text-slate-900'>{title}</h2>
 
         {title === 'Personal' && (
-          <button onClick={handleLock} className='relative -top-1 cursor-pointer'>
+          <button onClick={handleLock} className='relative -top-1 cursor-pointer fill-slate-600'>
             {isLocked ? <LockKeyhole /> : <LockKeyholeOpen />}
           </button>
         )}
@@ -58,25 +58,18 @@ export function InfoListItem({
   isPrivate,
 }: InfoListItemProps) {
   const { isLocked } = useDataStore();
-  const [text, setText] = useState<string>('');
   const [isLink, setIsLink] = useState<boolean>(false);
 
   const labelClassName = classNames('text-base font-semibold text-slate-900', {
     '-mb-1': !metaLabel || (metaLabel && footnote),
   });
 
-  const privateClassName = classNames('font-base text-base text-slate-500 transition-all', {
-    'blur-sm': isLocked,
-    'blur-none': !isLocked,
+  const privateClassName = classNames('text-base text-slate-500 transition-all', {
+    'blur-sm': isPrivate && isLocked,
+    'blur-none': !isPrivate || !isLocked,
   });
 
   useEffect(() => {
-    if (Array.isArray(value)) {
-      setText(value.join(', '));
-    } else if (value) {
-      setText(value);
-    }
-
     if (value && value.includes('https')) {
       setIsLink(true);
     }
@@ -93,22 +86,20 @@ export function InfoListItem({
 
       <p className={labelClassName}>{label}</p>
 
-      {!isPrivate && text && !isLink && <p className='text-base text-slate-500'>{text}</p>}
-      {!isPrivate && text && isLink && (
+      {!isLink ? (
+        <p className={privateClassName}>{value ? value : 'Lorem ipsum dolor sit amet'}</p>
+      ) : (
         <a
-          href={text}
+          href={value}
           target='_blank'
           rel='noopener noreferrer'
           className='relative block w-fit text-base text-slate-500 after:-bottom-px after:left-0 after:block after:h-px after:w-full after:bg-slate-500 after:opacity-0 after:transition-opacity after:content-[""] hover:after:opacity-100'
         >
-          {text.replace('https://', '')}
+          {value?.replace('https://', '')}
           <SquareArrowOutUpRight width={12} height={12} className='absolute top-[7px] -right-4' />
         </a>
       )}
 
-      {isPrivate && (
-        <p className={privateClassName}>{text ? text : 'Lorem ipsum dolor sit amet'}</p>
-      )}
       {footnote && <p className='text-xs text-slate-500'>{footnote}</p>}
     </div>
   );

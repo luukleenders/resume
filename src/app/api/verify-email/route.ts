@@ -12,10 +12,21 @@ export async function POST(request: Request) {
     }
 
     const result = await db.select().from(whitelist).where(eq(whitelist.email, email)).limit(1);
-
     const isWhitelisted = result.length > 0;
 
-    return NextResponse.json({ isWhitelisted });
+    const response = NextResponse.json({ isWhitelisted });
+
+    if (isWhitelisted) {
+      console.log('Setting session cookie');
+      response.cookies.set('session', email, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 60 * 60 * 24,
+      });
+    }
+
+    return response;
   } catch (error) {
     console.error('Error verifying email:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

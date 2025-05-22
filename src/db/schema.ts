@@ -43,6 +43,7 @@ export const personal = pgTable('personal', {
 export const whitelist = pgTable('whitelist', {
   id: serial('id').primaryKey(),
   email: varchar('email', { length: 255 }).notNull(),
+  hasAccess: boolean('has_access').default(false).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });

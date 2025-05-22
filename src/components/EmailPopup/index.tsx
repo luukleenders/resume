@@ -1,5 +1,6 @@
 import { Button, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { useDataStore } from '@store';
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 
 type EmailPopupProps = {
@@ -8,13 +9,16 @@ type EmailPopupProps = {
 };
 
 export function EmailPopup({ isOpen, onClose }: EmailPopupProps) {
-  const { setIsLocked, refetchData } = useDataStore();
+  const queryClient = useQueryClient();
+  const { setIsLocked } = useDataStore();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const emailRef = useRef<HTMLInputElement>(null);
 
-  const handleVerify = async () => {
+  const handleVerify = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     if (!email) {
       setError('Please enter an email address');
       return;
@@ -39,7 +43,7 @@ export function EmailPopup({ isOpen, onClose }: EmailPopupProps) {
       }
 
       if (data.isWhitelisted) {
-        await refetchData();
+        queryClient.invalidateQueries({ queryKey: ['personalInfo'] });
         setIsLocked(false);
         onClose();
       } else {
@@ -69,7 +73,7 @@ export function EmailPopup({ isOpen, onClose }: EmailPopupProps) {
       <DialogBackdrop onClick={onClose} className='fixed inset-0 bg-black/30' />
 
       <div className='fixed inset-0 z-10 w-screen overflow-y-auto'>
-        <div className='flex min-h-full items-center justify-center p-4'>
+        <div className='flex min-h-full items-center justify-center p-6'>
           <DialogPanel
             transition
             className='w-full max-w-md rounded-xl bg-slate-100 px-6 py-4 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0'
@@ -78,35 +82,37 @@ export function EmailPopup({ isOpen, onClose }: EmailPopupProps) {
               Fill in your email to get mine.
             </DialogTitle>
 
-            <div className='space-y-2'>
-              <input
-                type='email'
-                placeholder='Email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className='w-full rounded-md border border-none bg-white p-2 text-slate-900'
-                disabled={isLoading}
-                ref={emailRef}
-              />
-              {error && <p className='text-sm text-red-500'>{error}</p>}
-            </div>
+            <form onSubmit={handleVerify}>
+              <div className='space-y-2'>
+                <input
+                  type='email'
+                  placeholder='Email'
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className='w-full rounded-md border border-none bg-white p-2 text-slate-900'
+                  disabled={isLoading}
+                  ref={emailRef}
+                />
+                {error && <p className='text-sm text-red-500'>{error}</p>}
+              </div>
 
-            <div className='flex gap-2 pt-4'>
-              <Button
-                onClick={handleVerify}
-                disabled={isLoading}
-                className='inline-flex cursor-pointer items-center gap-2 rounded-md bg-slate-700 px-3 py-1.5 text-sm/6 font-semibold text-slate-100 shadow-inner shadow-white/10 focus:not-data-focus:outline-none disabled:opacity-50 data-focus:outline data-focus:outline-white data-hover:bg-slate-600 data-open:bg-slate-700'
-              >
-                {isLoading ? 'Verifying...' : 'Verify'}
-              </Button>
-              <Button
-                onClick={onClose}
-                disabled={isLoading}
-                className='inline-flex cursor-pointer items-center gap-2 rounded-md bg-slate-200 px-3 py-1.5 text-sm/6 font-semibold text-slate-700 shadow-inner shadow-white/10 focus:not-data-focus:outline-none disabled:opacity-50 data-focus:outline data-focus:outline-white data-hover:bg-slate-200 data-open:bg-slate-200'
-              >
-                Cancel
-              </Button>
-            </div>
+              <div className='flex gap-2 pt-4'>
+                <Button
+                  type='submit'
+                  disabled={isLoading}
+                  className='inline-flex cursor-pointer items-center gap-2 rounded-md bg-slate-700 px-3 py-1.5 text-sm/6 font-semibold text-slate-100 shadow-inner shadow-white/10 focus:not-data-focus:outline-none disabled:opacity-50 data-focus:outline data-focus:outline-white data-hover:bg-slate-600 data-open:bg-slate-700'
+                >
+                  {isLoading ? 'Verifying...' : 'Verify'}
+                </Button>
+                <Button
+                  onClick={onClose}
+                  disabled={isLoading}
+                  className='inline-flex cursor-pointer items-center gap-2 rounded-md bg-slate-200 px-3 py-1.5 text-sm/6 font-semibold text-slate-700 shadow-inner shadow-white/10 focus:not-data-focus:outline-none disabled:opacity-50 data-focus:outline data-focus:outline-white data-hover:bg-slate-200 data-open:bg-slate-200'
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
           </DialogPanel>
         </div>
       </div>
