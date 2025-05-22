@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
   if (
     session ||
     !request.nextUrl.pathname.startsWith('/api/') ||
-    !request.nextUrl.searchParams.has('includePrivate')
+    !request.nextUrl.searchParams.has('includePrivate=true')
   ) {
     return NextResponse.next();
   }
