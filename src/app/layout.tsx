@@ -14,8 +14,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: 'https://luuk.leenders.li/thumb.png',
-        width: 1000,
-        height: 1418,
+        width: 1200,
+        height: 287,
         alt: 'Curriculum Vitae',
       },
     ],
