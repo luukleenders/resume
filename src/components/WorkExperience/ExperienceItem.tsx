@@ -1,7 +1,7 @@
 'use client';
 
 import { SquareArrowOutUpRight } from 'lucide-react';
-import { useEffect, useState, type PropsWithChildren } from 'react';
+import { useState } from 'react';
 
 type ExperienceItemProps = {
   company: string;
@@ -13,15 +13,6 @@ type ExperienceItemProps = {
   bullets: string[];
 };
 
-export function Experience({ children }: PropsWithChildren) {
-  return (
-    <div>
-      <h2 className='mb-2 text-2xl font-bold text-slate-900'>Work Experience</h2>
-      {children}
-    </div>
-  );
-}
-
 export function ExperienceItem({
   company,
   position,
@@ -31,13 +22,7 @@ export function ExperienceItem({
   techstack,
   bullets,
 }: ExperienceItemProps) {
-  const [isLink, setIsLink] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (url && url.includes('https')) {
-      setIsLink(true);
-    }
-  }, [url]);
+  const [isLink] = useState<boolean>(url?.includes('https') ?? false);
 
   return (
     <div className='relative mb-4'>

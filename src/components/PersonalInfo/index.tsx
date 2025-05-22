@@ -1,12 +1,9 @@
 'use client';
 
 import { InfoList, InfoListItem } from '@components/InfoList';
-import { useQuery } from '@tanstack/react-query';
-import { personalInfoOptions } from './queries';
+import { Personal } from '@db/types';
 
-export function PersonalInfo() {
-  const { data } = useQuery(personalInfoOptions);
-
+export function PersonalInfo({ data }: { data: Personal[] }) {
   return (
     <InfoList title='Personal'>
       {data?.map((item) => (

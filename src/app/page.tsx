@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 
-import { Experience, ExperienceItem } from '@components/Experience';
+import { WorkExperience } from '@components/WorkExperience';
 import { InfoList, InfoListItem } from '@components/InfoList';
 import { PersonalInfo } from '@components/PersonalInfo';
 import { ProfilePicture } from '@components/ProfilePicture';
@@ -9,42 +9,28 @@ import { Title } from '@components/Title';
 import { ToggleButton } from '@components/ToggleButton';
 import { MainContent } from '@components/MainContent';
 
-import { Education, Experience as ExperienceType, Skill } from '@db/types';
+import { Education, Experience as ExperienceType, Personal, Skill } from '@db/types';
 
-import { getQueryClient } from './queryClient';
-import { personalInfoOptions } from '@components/PersonalInfo/queries';
 import { SessionProvider } from '@components/SessionProvider';
+import { useDataStore } from '@store';
 
-async function getSkillsData() {
-  const res = await fetch(`${process.env.BASE_URL}/api/skills`);
-  if (!res.ok) throw new Error('Failed to fetch skills data');
-  return res.json() as Promise<Skill[]>;
-}
+async function getData<T>(type: 'skills' | 'education' | 'experience' | 'personal'): Promise<T> {
+  const { isLocked } = useDataStore.getState();
 
-async function getEducationData() {
-  const res = await fetch(`${process.env.BASE_URL}/api/education`);
-  if (!res.ok) throw new Error('Failed to fetch education data');
-  return res.json() as Promise<Education[]>;
-}
-
-async function getExperienceData() {
-  const res = await fetch(`${process.env.BASE_URL}/api/experience`);
-  if (!res.ok) throw new Error('Failed to fetch experience data');
-  return res.json() as Promise<ExperienceType[]>;
+  const res = await fetch(`${process.env.BASE_URL}/api/${type}?includePrivate=${isLocked}`);
+  if (!res.ok) throw new Error(`Failed to fetch ${type} data`);
+  return res.json() as Promise<T>;
 }
 
 export default async function Home() {
-  const queryClient = getQueryClient();
-
   const cookieStore = await cookies();
   const session = cookieStore.get('session');
 
-  await queryClient.prefetchQuery(personalInfoOptions);
-
-  const [skills, education, experiences] = await Promise.all([
-    getSkillsData(),
-    getEducationData(),
-    getExperienceData(),
+  const [skills, education, experience, personal] = await Promise.all([
+    getData<Skill[]>('skills'),
+    getData<Education[]>('education'),
+    getData<ExperienceType[]>('experience'),
+    getData<Personal[]>('personal'),
   ]);
 
   return (
@@ -59,7 +45,7 @@ export default async function Home() {
           </div>
 
           <div className='relative z-10 -mt-[150px] flex flex-col overflow-y-auto px-4 pt-[150px] [scrollbar-width:none] lg:px-8 [&::-webkit-scrollbar]:hidden'>
-            <PersonalInfo />
+            <PersonalInfo data={personal} />
 
             <InfoList title='Skills'>
               {skills.map((skill) => (
@@ -92,15 +78,7 @@ export default async function Home() {
             <Title />
           </div>
 
-          <div className='z-10 -mt-[150px] flex flex-col overflow-y-auto px-4 pt-[150px] [scrollbar-width:none] lg:px-8 [&::-webkit-scrollbar]:hidden'>
-            <Experience>
-              {experiences.map((item) => (
-                <ExperienceItem key={item.company} {...item} />
-              ))}
-
-              <div className='min-h-12' />
-            </Experience>
-          </div>
+          <WorkExperience data={experience} />
         </MainContent>
       </div>
     </div>

@@ -1,6 +1,5 @@
 import { Button, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { useDataStore } from '@store';
-import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 
 type EmailPopupProps = {
@@ -9,7 +8,6 @@ type EmailPopupProps = {
 };
 
 export function EmailPopup({ isOpen, onClose }: EmailPopupProps) {
-  const queryClient = useQueryClient();
   const { setIsLocked } = useDataStore();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -43,10 +41,10 @@ export function EmailPopup({ isOpen, onClose }: EmailPopupProps) {
       }
 
       if (data.isWhitelisted) {
-        queryClient.invalidateQueries({ queryKey: ['personalInfo'] });
         setIsLocked(false);
         onClose();
       } else {
+        setIsLocked(true);
         setError('Email not found in whitelist');
       }
     } catch (err) {

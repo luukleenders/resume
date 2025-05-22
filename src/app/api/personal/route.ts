@@ -25,6 +25,6 @@ export async function GET(request: Request) {
 
     return NextResponse.json(data);
   } catch {
-    return NextResponse.json({ error: 'Failed to fetch skills data' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch personal data' }, { status: 500 });
   }
 }

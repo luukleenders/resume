@@ -2,12 +2,24 @@ import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 
 import './globals.css';
-import Providers from './providers';
 
 // eslint-disable-next-line
 export const metadata: Metadata = {
-  title: 'Luuk Leenders',
-  description: 'The resume of Luuk Leenders',
+  title: 'Curriculum Vitae',
+  description: 'Resume for Luuk Leenders.',
+  openGraph: {
+    title: 'Curriculum Vitae',
+    description: 'Resume for Luuk Leenders.',
+    url: 'https://luuk.leenders.li',
+    images: [
+      {
+        url: 'https://luuk.leenders.li/thumb.png',
+        width: 1000,
+        height: 1418,
+        alt: 'Curriculum Vitae',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -17,9 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body>
-        <Providers>{children}</Providers>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

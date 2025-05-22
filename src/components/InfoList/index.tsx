@@ -4,7 +4,7 @@ import { EmailPopup } from '@components/EmailPopup';
 import { useDataStore } from '@store';
 import classNames from 'classnames';
 import { LockKeyhole, LockKeyholeOpen, SquareArrowOutUpRight } from 'lucide-react';
-import { useEffect, useState, type PropsWithChildren } from 'react';
+import { useState, type PropsWithChildren } from 'react';
 
 type InfoListProps = PropsWithChildren<{
   className?: string;
@@ -58,7 +58,7 @@ export function InfoListItem({
   isPrivate,
 }: InfoListItemProps) {
   const { isLocked } = useDataStore();
-  const [isLink, setIsLink] = useState<boolean>(false);
+  const [isLink] = useState<boolean>(value?.includes('https') ?? false);
 
   const labelClassName = classNames('text-base font-semibold text-slate-900', {
     '-mb-1': !metaLabel || (metaLabel && footnote),
@@ -68,12 +68,6 @@ export function InfoListItem({
     'blur-sm': isPrivate && isLocked,
     'blur-none': !isPrivate || !isLocked,
   });
-
-  useEffect(() => {
-    if (value && value.includes('https')) {
-      setIsLink(true);
-    }
-  }, [value]);
 
   return (
     <div className='relative mb-1'>

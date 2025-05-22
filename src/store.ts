@@ -9,13 +9,8 @@ type DataStore = {
   setIsOpen: (isOpen: boolean) => void;
 };
 
-// Check if we have a session cookie
-const hasSession = typeof document !== 'undefined' && document.cookie.includes('session=');
-
-console.log('hasSession', hasSession);
-
 export const useDataStore = create<DataStore>((set) => ({
-  isLocked: !hasSession,
+  isLocked: true,
   isMobile: false,
   isOpen: true,
   setIsLocked: (isLocked: boolean) => set({ isLocked }),
