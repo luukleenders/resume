@@ -1,7 +1,9 @@
 'use client';
 
+import { EmailPopup } from '@components/EmailPopup';
+import { useDataStore } from '@store';
 import classNames from 'classnames';
-import { SquareArrowOutUpRight } from 'lucide-react';
+import { LockKeyhole, LockKeyholeOpen, SquareArrowOutUpRight } from 'lucide-react';
 import { useEffect, useState, type PropsWithChildren } from 'react';
 
 type InfoListProps = PropsWithChildren<{
@@ -15,23 +17,57 @@ type InfoListItemProps = {
   footnote?: string | null;
   metaLabel?: string | null;
   metaValue?: string | null;
+  isPrivate?: boolean;
 };
 
 export function InfoList({ children, title }: InfoListProps) {
+  const { isLocked } = useDataStore();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
+  const handleLock = () => {
+    setIsOpen(true);
+  };
+
   return (
     <div className='mb-4'>
-      <h2 className='mb-1 text-2xl font-bold text-slate-900'>{title}</h2>
+      <div className='relative flex flex-row items-center justify-between'>
+        <h2 className='mb-1 text-2xl font-bold text-slate-900'>{title}</h2>
+
+        {title === 'Personal' && (
+          <button onClick={handleLock} className='relative -top-1 cursor-pointer'>
+            {isLocked ? <LockKeyhole /> : <LockKeyholeOpen />}
+          </button>
+        )}
+      </div>
       {children}
+      <EmailPopup isOpen={isOpen} onClose={handleClose} />
     </div>
   );
 }
 
-export function InfoListItem({ label, value, metaLabel, metaValue, footnote }: InfoListItemProps) {
+export function InfoListItem({
+  label,
+  value,
+  metaLabel,
+  metaValue,
+  footnote,
+  isPrivate,
+}: InfoListItemProps) {
+  const { isLocked } = useDataStore();
   const [text, setText] = useState<string>('');
   const [isLink, setIsLink] = useState<boolean>(false);
 
   const labelClassName = classNames('text-base font-semibold text-slate-900', {
     '-mb-1': !metaLabel || (metaLabel && footnote),
+  });
+
+  const privateClassName = classNames('font-base text-base text-slate-500 transition-all', {
+    'blur-sm': isLocked,
+    'blur-none': !isLocked,
   });
 
   useEffect(() => {
@@ -54,9 +90,11 @@ export function InfoListItem({ label, value, metaLabel, metaValue, footnote }: I
           {metaValue}
         </p>
       )}
+
       <p className={labelClassName}>{label}</p>
-      {text && !isLink && <p className='text-base text-slate-500'>{text}</p>}
-      {text && isLink && (
+
+      {!isPrivate && text && !isLink && <p className='text-base text-slate-500'>{text}</p>}
+      {!isPrivate && text && isLink && (
         <a
           href={text}
           target='_blank'
@@ -66,6 +104,10 @@ export function InfoListItem({ label, value, metaLabel, metaValue, footnote }: I
           <SquareArrowOutUpRight width={12} height={12} className='absolute top-[7px] -left-4' />
           {text.replace('https://', '')}
         </a>
+      )}
+
+      {isPrivate && (
+        <p className={privateClassName}>{text ? text : 'Lorem ipsum dolor sit amet'}</p>
       )}
       {footnote && <p className='text-xs text-slate-500'>{footnote}</p>}
     </div>

@@ -21,6 +21,8 @@
     "paths": {
       "@components/*": ["./src/components/*"],
       "@context/*": ["./src/context/*"],
+      "@db": ["./src/db"],
+      "@db/*": ["./src/db/*"],
       "@data/*": ["./src/data/*"],
       "@store": ["./src/store"]
     }

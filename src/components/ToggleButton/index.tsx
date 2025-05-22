@@ -2,7 +2,7 @@
 
 import { useWindowSize } from '@uidotdev/usehooks';
 import classNames from 'classnames';
-import { CircleArrowLeft } from 'lucide-react';
+import { SquareArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { useDataStore } from '@store';
@@ -66,7 +66,7 @@ export function ToggleButton() {
       className='absolute top-4 z-30 cursor-pointer'
       onClick={handleToggle}
     >
-      <CircleArrowLeft className={iconClassName} />
+      <SquareArrowLeft className={iconClassName} />
     </motion.button>
   );
 }

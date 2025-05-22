@@ -1,5 +1,6 @@
 import { Experience, ExperienceItem } from '@components/Experience';
 import { InfoList, InfoListItem } from '@components/InfoList';
+import { PersonalInfo } from '@components/PersonalInfo';
 import { ProfilePicture } from '@components/ProfilePicture';
 import { Sidebar } from '@components/Sidebar';
 import { Title } from '@components/Title';
@@ -50,11 +51,7 @@ export default async function Home() {
           </div>
 
           <div className='relative z-10 -mt-[150px] flex flex-col overflow-y-auto px-4 pt-[150px] [scrollbar-width:none] lg:px-8 [&::-webkit-scrollbar]:hidden'>
-            <InfoList title='Personal'>
-              {personal.map((item) => (
-                <InfoListItem key={item.key} label={item.key} value={item.value} />
-              ))}
-            </InfoList>
+            <PersonalInfo initialData={personal} />
 
             <InfoList title='Skills'>
               {skills.map((skill) => (
