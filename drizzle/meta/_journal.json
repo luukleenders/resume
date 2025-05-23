@@ -43,6 +43,13 @@
       "when": 1747906180449,
       "tag": "0005_military_celestials",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1747987113314,
+      "tag": "0006_wakeful_harrier",
+      "breakpoints": true
     }
   ]
 }

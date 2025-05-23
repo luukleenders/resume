@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { db } from '@db';
 import { whitelist } from '@db/schema';
-import { and, eq } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 
 export async function POST(request: Request) {
   try {
@@ -11,22 +11,25 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
-    const result = await db
-      .select()
-      .from(whitelist)
-      .where(and(eq(whitelist.email, email), eq(whitelist.hasAccess, true)))
-      .limit(1);
-    const isWhitelisted = result.length > 0;
+    let result = await db.select().from(whitelist).where(eq(whitelist.email, email)).limit(1);
+    if (result.length === 0) {
+      await db.insert(whitelist).values({
+        email,
+        hasAccess: true,
+      });
 
+      result = await db.select().from(whitelist).where(eq(whitelist.email, email)).limit(1);
+    }
+
+    const isWhitelisted = result[0]?.hasAccess ?? false;
     const response = NextResponse.json({ isWhitelisted });
 
     if (isWhitelisted) {
-      console.log('Setting session cookie');
       response.cookies.set('session', email, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
-        maxAge: 60 * 60 * 24,
+        maxAge: 7 * 24 * 60 * 60, // 7 days in seconds
       });
     } else {
       response.cookies.delete('session');
