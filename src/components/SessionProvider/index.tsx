@@ -12,11 +12,12 @@ interface SessionProps {
 }
 
 export function SessionProvider({ session }: SessionProps) {
-  const setIsLocked = useDataStore((state) => state.setIsLocked);
+  const { setEmail, setIsLocked } = useDataStore();
 
   useEffect(() => {
+    setEmail(session?.value ?? '');
     setIsLocked(!session);
-  }, [session, setIsLocked]);
+  }, [session, setEmail, setIsLocked]);
 
   return null;
 }

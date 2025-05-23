@@ -1,6 +1,8 @@
+import { Personal } from '@db/types';
 import { Button, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { useDataStore } from '@store';
 import { useEffect, useRef, useState } from 'react';
+import { getData } from '../../app/getData';
 
 type EmailPopupProps = {
   isOpen: boolean;
@@ -8,8 +10,7 @@ type EmailPopupProps = {
 };
 
 export function EmailPopup({ isOpen, onClose }: EmailPopupProps) {
-  const { setIsLocked } = useDataStore();
-  const [email, setEmail] = useState('');
+  const { email, setEmail, setIsLocked, setPersonal } = useDataStore();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const emailRef = useRef<HTMLInputElement>(null);
@@ -41,9 +42,14 @@ export function EmailPopup({ isOpen, onClose }: EmailPopupProps) {
       }
 
       if (data.isWhitelisted) {
+        const personal = await getData<Personal[]>('personal', true);
+
+        setEmail(email);
+        setPersonal(personal);
         setIsLocked(false);
         onClose();
       } else {
+        setEmail('');
         setIsLocked(true);
         setError('Email not found in whitelist');
       }
@@ -77,21 +83,21 @@ export function EmailPopup({ isOpen, onClose }: EmailPopupProps) {
             className='w-full max-w-md rounded-xl bg-slate-100 px-6 py-4 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0'
           >
             <DialogTitle as='h3' className='mb-1 text-base/7 font-semibold text-slate-900'>
-              Fill in your email to get mine.
+              Request access to contact information
             </DialogTitle>
 
             <form onSubmit={handleVerify}>
-              <div className='space-y-2'>
+              <div className='relative'>
                 <input
                   type='email'
                   placeholder='Email'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className='w-full rounded-md border border-none bg-white p-2 text-slate-900'
+                  className='mb-4 w-full rounded-md border border-none bg-white p-2 text-slate-900'
                   disabled={isLoading}
                   ref={emailRef}
                 />
-                {error && <p className='text-sm text-red-500'>{error}</p>}
+                {error && <p className='absolute -bottom-1 left-0 text-xs text-red-500'>{error}</p>}
               </div>
 
               <div className='flex gap-2 pt-4'>
@@ -100,7 +106,7 @@ export function EmailPopup({ isOpen, onClose }: EmailPopupProps) {
                   disabled={isLoading}
                   className='inline-flex cursor-pointer items-center gap-2 rounded-md bg-slate-700 px-3 py-1.5 text-sm/6 font-semibold text-slate-100 shadow-inner shadow-white/10 focus:not-data-focus:outline-none disabled:opacity-50 data-focus:outline data-focus:outline-white data-hover:bg-slate-600 data-open:bg-slate-700'
                 >
-                  {isLoading ? 'Verifying...' : 'Verify'}
+                  {isLoading ? 'Hold on...' : 'Submit'}
                 </Button>
                 <Button
                   onClick={onClose}

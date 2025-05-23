@@ -12,25 +12,17 @@ import { MainContent } from '@components/MainContent';
 import { Education, Experience as ExperienceType, Personal, Skill } from '@db/types';
 
 import { SessionProvider } from '@components/SessionProvider';
-import { useDataStore } from '@store';
-
-async function getData<T>(type: 'skills' | 'education' | 'experience' | 'personal'): Promise<T> {
-  const { isLocked } = useDataStore.getState();
-
-  const res = await fetch(`${process.env.BASE_URL}/api/${type}?includePrivate=${isLocked}`);
-  if (!res.ok) throw new Error(`Failed to fetch ${type} data`);
-  return res.json() as Promise<T>;
-}
+import { getData } from './getData';
 
 export default async function Home() {
   const cookieStore = await cookies();
   const session = cookieStore.get('session');
 
   const [skills, education, experience, personal] = await Promise.all([
-    getData<Skill[]>('skills'),
-    getData<Education[]>('education'),
-    getData<ExperienceType[]>('experience'),
-    getData<Personal[]>('personal'),
+    getData<Skill[]>('skills', session?.value ? true : false),
+    getData<Education[]>('education', session?.value ? true : false),
+    getData<ExperienceType[]>('experience', session?.value ? true : false),
+    getData<Personal[]>('personal', session?.value ? true : false),
   ]);
 
   return (

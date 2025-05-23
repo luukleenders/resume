@@ -4,7 +4,7 @@ import { EmailPopup } from '@components/EmailPopup';
 import { useDataStore } from '@store';
 import classNames from 'classnames';
 import { LockKeyhole, LockKeyholeOpen, SquareArrowOutUpRight } from 'lucide-react';
-import { useState, type PropsWithChildren } from 'react';
+import { useCallback, useState, type PropsWithChildren } from 'react';
 
 type InfoListProps = PropsWithChildren<{
   className?: string;
@@ -21,16 +21,48 @@ type InfoListItemProps = {
 };
 
 export function InfoList({ children, title }: InfoListProps) {
-  const { isLocked } = useDataStore();
+  const { isLocked, email, setIsLocked } = useDataStore();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
     setIsOpen(false);
   };
 
-  const handleLock = () => {
-    setIsOpen(true);
-  };
+  const handleLock = useCallback(async () => {
+    if (!isLocked) {
+      setIsLocked(true);
+      return;
+    }
+
+    if (!email) {
+      setIsOpen(true);
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/verify-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to verify email');
+      }
+
+      if (data.isWhitelisted) {
+        setIsLocked(false);
+      } else {
+        setIsOpen(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [isLocked, email, setIsLocked, setIsOpen]);
 
   return (
     <div className='mb-4'>
@@ -81,7 +113,9 @@ export function InfoListItem({
       <p className={labelClassName}>{label}</p>
 
       {!isLink ? (
-        <p className={privateClassName}>{value ? value : 'Lorem ipsum dolor sit amet'}</p>
+        <p className={privateClassName}>
+          {isPrivate && !value ? 'Lorem ipsum dolor sit amet' : value}
+        </p>
       ) : (
         <a
           href={value}
