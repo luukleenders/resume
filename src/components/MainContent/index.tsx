@@ -10,7 +10,7 @@ export function MainContent({ children }: PropsWithChildren) {
   const { isOpen, isMobile, setIsOpen, setHasInteracted } = useAppStore((state) => state);
 
   const handlers = useSwipeable({
-    onSwiped: ({ dir }) => {
+    onSwipeStart: ({ dir }) => {
       if (dir === 'Left') {
         setIsOpen(false);
       } else if (dir === 'Right') {
