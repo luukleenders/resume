@@ -61,7 +61,7 @@ export function Personal() {
 
         <div className='relative -top-1 flex flex-row items-center gap-4'>
           {pdfUrl && (
-            <a href={pdfUrl} download='LuukLeenders-resume_en_2025.pdf'>
+            <a href={pdfUrl} target='_blank' rel='noopener noreferrer'>
               <Download stroke='#0f172b' />
             </a>
           )}

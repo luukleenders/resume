@@ -43,7 +43,7 @@ export async function GET(request: Request) {
   return new NextResponse(pdfBuffer, {
     headers: {
       'Content-Type': 'application/pdf',
-      'Content-Disposition': 'attachment; filename="resume.pdf"',
+      'Content-Disposition': 'inline; filename="resume.pdf"',
     },
   });
 }
