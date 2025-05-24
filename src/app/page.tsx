@@ -1,18 +1,16 @@
 import { cookies } from 'next/headers';
 
-import { WorkExperience } from '@components/WorkExperience';
 import { InfoList, InfoListItem } from '@components/InfoList';
+import { MainContent } from '@components/MainContent';
 import { PersonalInfo } from '@components/PersonalInfo';
 import { ProfilePicture } from '@components/ProfilePicture';
+import { SessionProvider } from '@components/SessionProvider';
 import { Sidebar } from '@components/Sidebar';
 import { Title } from '@components/Title';
 import { ToggleButton } from '@components/ToggleButton';
-import { MainContent } from '@components/MainContent';
-
-import { Education, Experience as ExperienceType, Personal, Skill } from '@db/types';
-
-import { SessionProvider } from '@components/SessionProvider';
-import { getData } from './getData';
+import { WorkExperience } from '@components/WorkExperience';
+import { getData } from '@db/getData';
+import type { Education, Experience as ExperienceType, Personal, Skill } from '@db/types';
 
 export default async function Home() {
   const cookieStore = await cookies();

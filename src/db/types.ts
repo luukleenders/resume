@@ -1,5 +1,6 @@
-import { InferSelectModel } from 'drizzle-orm';
-import { education, experiences, personal, skills, whitelist } from './schema';
+import type { InferSelectModel } from 'drizzle-orm';
+
+import type { education, experiences, personal, skills, whitelist } from './schema';
 
 export type Education = Omit<InferSelectModel<typeof education>, 'createdAt' | 'updatedAt'>;
 export type Experience = Omit<InferSelectModel<typeof experiences>, 'createdAt' | 'updatedAt'>;

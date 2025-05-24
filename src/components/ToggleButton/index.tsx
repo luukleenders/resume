@@ -1,10 +1,11 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useWindowSize } from '@uidotdev/usehooks';
 import classNames from 'classnames';
 import { SquareArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useEffect, useState } from 'react';
+
 import { useDataStore } from '@store';
 
 export function ToggleButton() {

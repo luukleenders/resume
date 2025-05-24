@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
+import { eq } from 'drizzle-orm';
+
 import { db } from '@db';
 import { whitelist } from '@db/schema';
-import { eq } from 'drizzle-orm';
 
 export async function POST(request: Request) {
   try {

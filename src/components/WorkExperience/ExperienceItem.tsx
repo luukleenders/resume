@@ -1,7 +1,7 @@
 'use client';
 
+import { useMemo } from 'react';
 import { SquareArrowOutUpRight } from 'lucide-react';
-import { useState } from 'react';
 
 type ExperienceItemProps = {
   company: string;
@@ -22,7 +22,7 @@ export function ExperienceItem({
   techstack,
   bullets,
 }: ExperienceItemProps) {
-  const [isLink] = useState<boolean>(url?.includes('https') ?? false);
+  const isLink = useMemo<boolean>(() => url?.includes('https') ?? false, [url]);
 
   return (
     <div className='relative mb-4'>

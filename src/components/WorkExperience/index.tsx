@@ -1,7 +1,8 @@
 'use client';
 
+import type { Experience } from '@db/types';
+
 import { ExperienceItem } from './ExperienceItem';
-import { Experience } from '@db/types';
 
 export function WorkExperience({ data }: { data: Experience[] }) {
   return (

@@ -1,8 +1,9 @@
-import { Personal } from '@db/types';
-import { Button, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
-import { useDataStore } from '@store';
 import { useEffect, useRef, useState } from 'react';
-import { getData } from '../../app/getData';
+import { Button, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
+
+import { getData } from '@db/getData';
+import type { Personal } from '@db/types';
+import { useDataStore } from '@store';
 
 type EmailPopupProps = {
   isOpen: boolean;

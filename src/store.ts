@@ -1,5 +1,6 @@
-import { Personal } from '@db/types';
 import { create } from 'zustand';
+
+import type { Personal } from '@db/types';
 
 type DataStore = {
   email: string;

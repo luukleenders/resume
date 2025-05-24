@@ -1,7 +1,7 @@
 'use client';
 
 import { InfoList, InfoListItem } from '@components/InfoList';
-import { Personal } from '@db/types';
+import type { Personal } from '@db/types';
 import { useDataStore } from '@store';
 
 export function PersonalInfo({ data }: { data: Personal[] }) {

@@ -1,10 +1,11 @@
 'use client';
 
-import { EmailPopup } from '@components/EmailPopup';
-import { useDataStore } from '@store';
+import { type PropsWithChildren, useCallback, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import { LockKeyhole, LockKeyholeOpen, SquareArrowOutUpRight } from 'lucide-react';
-import { useCallback, useState, type PropsWithChildren } from 'react';
+
+import { EmailPopup } from '@components/EmailPopup';
+import { useDataStore } from '@store';
 
 type InfoListProps = PropsWithChildren<{
   className?: string;
@@ -90,7 +91,7 @@ export function InfoListItem({
   isPrivate,
 }: InfoListItemProps) {
   const { isLocked } = useDataStore();
-  const [isLink] = useState<boolean>(value?.includes('https') ?? false);
+  const isLink = useMemo<boolean>(() => value?.includes('https') ?? false, [value]);
 
   const labelClassName = classNames('text-base font-semibold text-slate-900', {
     '-mb-1': !metaLabel || (metaLabel && footnote),

@@ -3,7 +3,7 @@ import { asc, sql } from 'drizzle-orm';
 
 import { db } from '@db';
 import { personal } from '@db/schema';
-import { Personal } from '@db/types';
+import type { Personal } from '@db/types';
 
 export async function GET(request: Request) {
   try {
