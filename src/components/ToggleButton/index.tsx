@@ -54,14 +54,14 @@ export function ToggleButton() {
       if (isOpen) {
         setButtonX(296);
       } else {
-        setButtonX(24);
+        setButtonX(16);
       }
     }
   }, [windowSize.width, isOpen, setIsOpen, setIsMobile]);
 
   return (
     <motion.button
-      initial={{ x: 296 }}
+      initial={{ x: isOpen ? 296 : 8 }}
       animate={{ x: buttonX }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       className='absolute top-4 z-30 cursor-pointer'

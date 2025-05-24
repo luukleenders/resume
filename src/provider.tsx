@@ -14,7 +14,6 @@ export const AppStoreContext = createContext<AppStoreApi | undefined>(undefined)
 
 export interface AppStoreProviderProps {
   children: ReactNode;
-  isMobile: boolean;
   skills: Skill[];
   education: Education[];
   experience: Experience[];
@@ -27,7 +26,6 @@ export interface AppStoreProviderProps {
 
 export function AppStoreProvider({
   children,
-  isMobile,
   skills,
   education,
   experience,
@@ -37,7 +35,7 @@ export function AppStoreProvider({
   const storeRef = useRef<AppStoreApi | null>(null);
   if (storeRef.current === null) {
     storeRef.current = createAppStore(
-      initAppStore(isMobile, skills, education, experience, personal, session)
+      initAppStore(skills, education, experience, personal, session)
     );
   }
 

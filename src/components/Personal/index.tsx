@@ -3,7 +3,7 @@
 import { InfoList, InfoListItem } from '@components/InfoList';
 import { useAppStore } from '@provider';
 
-export function PersonalInfo() {
+export function Personal() {
   const { personal } = useAppStore((state) => state);
 
   return (

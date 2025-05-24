@@ -1,25 +1,26 @@
 import './globals.css';
 
-import { cookies, headers } from 'next/headers';
-import { userAgent } from 'next/server';
-import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
+import type { Metadata as NextMetadata } from 'next';
 import type { ReactNode } from 'react';
 
 import { getData } from '@db/getData';
-import type { Education, Experience, Personal, Skill } from '@db/types';
+import type { Education, Experience, Metadata, Personal, Skill } from '@db/types';
 import { AppStoreProvider } from '@provider';
 
-export const metadata: Metadata = {
-  title: 'Luuk Leenders | Senior Software Engineer',
-  description:
-    'Digital resume of Luuk Leenders, a Senior Software Engineer specialising in web development',
-  openGraph: {
-    url: 'https://luuk.leenders.li',
-    type: 'website',
-    title: 'Luuk Leenders | Senior Software Engineer',
-    description:
-      'Digital resume of Luuk Leenders, a Senior Software Engineer specialising in web development',
-  },
+export const generateMetadata = async (): Promise<NextMetadata> => {
+  const metadata = await getData<Metadata[]>('metadata', true);
+
+  return {
+    title: metadata.find((item) => item.key === 'title')?.value,
+    description: metadata.find((item) => item.key === 'description')?.value,
+    openGraph: {
+      url: 'https://luuk.leenders.li',
+      type: 'website',
+      title: metadata.find((item) => item.key === 'title')?.value,
+      description: metadata.find((item) => item.key === 'description')?.value,
+    },
+  };
 };
 
 export default async function RootLayout({
@@ -27,10 +28,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const headerList = await headers();
-  const ua = userAgent({ headers: headerList });
-  const isMobile = /mobile/i.test(ua.ua);
-
   const cookieStore = await cookies();
   const session = cookieStore.get('session');
 
@@ -45,7 +42,6 @@ export default async function RootLayout({
     <html lang='en'>
       <body>
         <AppStoreProvider
-          isMobile={isMobile}
           skills={skills}
           education={education}
           experience={experience}

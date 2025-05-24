@@ -24,7 +24,6 @@ export type AppActions = {
 export type AppStore = AppState & AppActions;
 
 export const initAppStore = (
-  isMobile: boolean,
   skills: Skill[],
   education: Education[],
   experience: Experience[],
@@ -34,8 +33,8 @@ export const initAppStore = (
   return {
     email: session?.value ?? '',
     isLocked: !session,
-    isMobile,
-    isOpen: !isMobile,
+    isMobile: true,
+    isOpen: false,
     personal,
     skills,
     education,
@@ -46,8 +45,8 @@ export const initAppStore = (
 export const defaultInitState: AppState = {
   email: '',
   isLocked: true,
-  isMobile: false,
-  isOpen: true,
+  isMobile: true,
+  isOpen: false,
   personal: [],
   skills: [],
   education: [],

@@ -1,11 +1,12 @@
-// import { InfoList, InfoListItem } from '@components/InfoList';
+import { Education } from '@components/Education';
 import { MainContent } from '@components/MainContent';
-import { PersonalInfo } from '@components/PersonalInfo';
+import { Personal } from '@components/Personal';
 import { ProfilePicture } from '@components/ProfilePicture';
 import { Sidebar } from '@components/Sidebar';
+import { Skills } from '@components/Skills';
 import { Title } from '@components/Title';
 import { ToggleButton } from '@components/ToggleButton';
-// import { WorkExperience } from '@components/WorkExperience';
+import { WorkExperience } from '@components/WorkExperience';
 
 export default async function Home() {
   return (
@@ -15,36 +16,17 @@ export default async function Home() {
 
         <Sidebar className='z-10'>
           <ProfilePicture className='sticky top-0 z-20' />
-          <PersonalInfo />
 
-          {/* <InfoList title='Skills'>
-            {skills.map((skill) => (
-              <InfoListItem
-                key={skill.category}
-                label={skill.category}
-                value={skill.items.join(', ')}
-              />
-            ))}
-          </InfoList>
-
-          <InfoList title='Education'>
-            {education.map((item) => (
-              <InfoListItem
-                key={item.label}
-                label={item.label}
-                footnote={item.footnote}
-                metaLabel={item.metaLabel}
-                metaValue={item.metaValue}
-              />
-            ))}
-          </InfoList> */}
+          <Personal />
+          <Skills />
+          <Education />
 
           <div className='min-h-12' />
         </Sidebar>
 
         <MainContent>
           <Title className='sticky top-0 z-20' />
-          {/* <WorkExperience className='z-10' data={experience} /> */}
+          <WorkExperience className='z-10' />
         </MainContent>
       </div>
     </div>

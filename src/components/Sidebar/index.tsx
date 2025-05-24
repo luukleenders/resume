@@ -11,7 +11,7 @@ export function Sidebar({ children, className }: PropsWithChildren<{ className?:
 
   return (
     <motion.div
-      initial={{ x: 0 }}
+      initial={{ x: isOpen ? 0 : -320 }}
       animate={{ x: isOpen ? 0 : -320 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       className={classNames(

@@ -1,5 +1,5 @@
 export async function getData<T>(
-  type: 'skills' | 'education' | 'experience' | 'personal',
+  type: 'skills' | 'education' | 'experience' | 'personal' | 'metadata',
   includePrivate: boolean
 ): Promise<T> {
   const baseUrl = process.env.BASE_URL || '';
