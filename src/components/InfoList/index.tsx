@@ -114,9 +114,7 @@ export function InfoListItem({
       <p className={labelClassName}>{label}</p>
 
       {!isLink ? (
-        <p className={privateClassName}>
-          {isPrivate && !value ? 'Lorem ipsum dolor sit amet' : value}
-        </p>
+        <p className={privateClassName}>{value}</p>
       ) : (
         <a
           href={value}

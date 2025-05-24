@@ -1,0 +1,1 @@
+ALTER TABLE "personal" DROP COLUMN "private";

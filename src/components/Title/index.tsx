@@ -12,7 +12,7 @@ export function Title({ className }: { className?: string }) {
   return (
     <div
       className={classNames(
-        'box-content flex items-end justify-start bg-white/30 px-4 py-8 backdrop-blur-lg',
+        'box-content flex items-end justify-start bg-white/30 px-4 py-8 backdrop-blur-lg lg:items-center',
         heightClasses,
         className
       )}

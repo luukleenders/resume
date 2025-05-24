@@ -1,0 +1,1 @@
+ALTER TABLE "personal" ADD COLUMN "private" boolean DEFAULT false NOT NULL;

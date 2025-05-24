@@ -50,6 +50,20 @@
       "when": 1747987113314,
       "tag": "0006_wakeful_harrier",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1748079647211,
+      "tag": "0007_clean_betty_ross",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1748079709189,
+      "tag": "0008_abnormal_electro",
+      "breakpoints": true
     }
   ]
 }
