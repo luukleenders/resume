@@ -5,6 +5,7 @@ import type { Education, Experience, Personal, Skill } from '@db/types';
 export type AppState = {
   email: string;
   fullAccess: boolean;
+  hasInteracted: boolean;
   isLocked: boolean;
   isMobile: boolean;
   isOpen: boolean;
@@ -16,6 +17,7 @@ export type AppState = {
 
 export type AppActions = {
   setEmail: (email: string) => void;
+  setHasInteracted: (hasInteracted: boolean) => void;
   setIsLocked: (isLocked: boolean) => void;
   setIsMobile: (isMobile: boolean) => void;
   setFullAccess: (fullAccess: boolean) => void;
@@ -28,6 +30,7 @@ export type AppStore = AppState & AppActions;
 export const defaultInitState: AppState = {
   email: '',
   fullAccess: false,
+  hasInteracted: false,
   isLocked: true,
   isMobile: true,
   isOpen: false,
@@ -57,6 +60,7 @@ export const createAppStore = (initState: AppState = defaultInitState) => {
     ...initState,
     setEmail: (email: string) => set({ email }),
     setFullAccess: (fullAccess: boolean) => set({ fullAccess }),
+    setHasInteracted: (hasInteracted: boolean) => set({ hasInteracted }),
     setIsLocked: (isLocked: boolean) => set({ isLocked }),
     setIsMobile: (isMobile: boolean) => set({ isMobile }),
     setIsOpen: (isOpen: boolean) => set({ isOpen }),
