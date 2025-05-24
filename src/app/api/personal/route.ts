@@ -16,8 +16,8 @@ export async function GET(request: Request) {
         id: personal.id,
         key: personal.key,
         value: sql<string>`CASE 
-          WHEN ${personal.key} = 'E-mail' AND ${includeEmail} = false THEN 'access@denied.com'
-          WHEN ${personal.key} = 'Phone' AND ${includePhone} = false THEN '+00 0 00 00 00 00'
+          WHEN ${personal.key} = 'E-mail' AND ${includeEmail} = false THEN '###@########.##'
+          WHEN ${personal.key} = 'Phone' AND ${includePhone} = false THEN '+## # ## ## ## ##'
           ELSE ${personal.value}
         END`,
         private: personal.private,
