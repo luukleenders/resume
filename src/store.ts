@@ -9,6 +9,7 @@ export type AppState = {
   isLocked: boolean;
   isMobile: boolean;
   isOpen: boolean;
+  pdfUrl: string;
   personal: Personal[];
   skills: Skill[];
   education: Education[];
@@ -17,11 +18,12 @@ export type AppState = {
 
 export type AppActions = {
   setEmail: (email: string) => void;
+  setFullAccess: (fullAccess: boolean) => void;
   setHasInteracted: (hasInteracted: boolean) => void;
   setIsLocked: (isLocked: boolean) => void;
   setIsMobile: (isMobile: boolean) => void;
-  setFullAccess: (fullAccess: boolean) => void;
   setIsOpen: (isOpen: boolean) => void;
+  setPdfUrl: (pdfUrl: string) => void;
   setPersonal: (personal: Personal[]) => void;
 };
 
@@ -34,6 +36,7 @@ export const defaultInitState: AppState = {
   isLocked: true,
   isMobile: true,
   isOpen: false,
+  pdfUrl: '',
   personal: [],
   skills: [],
   education: [],
@@ -64,6 +67,7 @@ export const createAppStore = (initState: AppState = defaultInitState) => {
     setIsLocked: (isLocked: boolean) => set({ isLocked }),
     setIsMobile: (isMobile: boolean) => set({ isMobile }),
     setIsOpen: (isOpen: boolean) => set({ isOpen }),
+    setPdfUrl: (pdfUrl: string) => set({ pdfUrl }),
     setPersonal: (personal: Personal[]) => set({ personal }),
   }));
 };

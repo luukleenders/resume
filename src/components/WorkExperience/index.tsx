@@ -11,7 +11,7 @@ export function WorkExperience({ className }: { className?: string }) {
 
   return (
     <div className={classNames('flex flex-col px-4 lg:px-8', className)}>
-      <h2 className='mb-2 text-2xl font-bold text-slate-900'>Work Experience</h2>
+      <h2 className='title'>Work Experience</h2>
 
       {experience.map((item) => (
         <ExperienceItem key={item.company} {...item} />

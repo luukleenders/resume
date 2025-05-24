@@ -25,7 +25,7 @@ body {
 }
 
 .title {
-  @apply mb-1 text-2xl font-bold text-slate-900;
+  @apply mb-1 text-2xl font-extrabold text-slate-900;
 }
 
 @theme {
