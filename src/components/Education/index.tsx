@@ -1,13 +1,15 @@
 'use client';
 
-import { InfoList, InfoListItem } from '@components/InfoList';
+import { InfoListItem } from '@components/InfoList';
 import { useAppStore } from '@provider';
 
 export function Education() {
   const { education } = useAppStore((state) => state);
 
   return (
-    <InfoList title='Education'>
+    <div>
+      <h2 className='title'>Education</h2>
+
       {education.map((item) => (
         <InfoListItem
           key={item.label}
@@ -17,6 +19,6 @@ export function Education() {
           metaValue={item.metaValue}
         />
       ))}
-    </InfoList>
+    </div>
   );
 }

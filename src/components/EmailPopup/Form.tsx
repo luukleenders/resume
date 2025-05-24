@@ -11,7 +11,9 @@ type FormProps = {
 };
 
 export function Form({ isOpen, onClose }: FormProps) {
-  const { email, setEmail, setIsLocked, setPersonal } = useAppStore((state) => state);
+  const { email, setEmail, setFullAccess, setIsLocked, setPersonal } = useAppStore(
+    (state) => state
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const emailRef = useRef<HTMLInputElement>(null);
@@ -49,6 +51,7 @@ export function Form({ isOpen, onClose }: FormProps) {
         });
 
         setEmail(email);
+        setFullAccess(data.fullAccess);
         setPersonal(personal);
         setIsLocked(false);
         onClose();

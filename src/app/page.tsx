@@ -17,9 +17,11 @@ export default async function Home() {
         <Sidebar className='z-10'>
           <ProfilePicture className='sticky top-0 z-20' />
 
-          <Personal />
-          <Skills />
-          <Education />
+          <div className='flex flex-col gap-4 px-4 lg:px-8'>
+            <Personal />
+            <Skills />
+            <Education />
+          </div>
 
           <div className='min-h-12' />
         </Sidebar>

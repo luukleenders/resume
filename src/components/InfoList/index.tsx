@@ -1,16 +1,10 @@
 'use client';
 
-import { type PropsWithChildren, useCallback, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import classNames from 'classnames';
-import { LockKeyhole, LockKeyholeOpen, SquareArrowOutUpRight } from 'lucide-react';
+import { SquareArrowOutUpRight } from 'lucide-react';
 
-import { EmailPopup } from '@components/EmailPopup';
 import { useAppStore } from '@provider';
-
-type InfoListProps = PropsWithChildren<{
-  className?: string;
-  title: string;
-}>;
 
 type InfoListItemProps = {
   label: string;
@@ -20,68 +14,6 @@ type InfoListItemProps = {
   metaValue?: string | null;
   isPrivate?: boolean;
 };
-
-export function InfoList({ children, title }: InfoListProps) {
-  const { isLocked, email, setFullAccess, setIsLocked } = useAppStore((state) => state);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
-  const handleLock = useCallback(async () => {
-    if (!isLocked) {
-      setIsLocked(true);
-      return;
-    }
-
-    if (!email) {
-      setIsOpen(true);
-      return;
-    }
-
-    try {
-      const response = await fetch('/api/verify-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to verify email');
-      }
-
-      if (data.isWhitelisted) {
-        setFullAccess(data.fullAccess);
-        setIsLocked(false);
-      } else {
-        setIsOpen(true);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }, [isLocked, email, setFullAccess, setIsLocked, setIsOpen]);
-
-  return (
-    <div className='mb-4 px-4 lg:px-8'>
-      <div className='relative flex flex-row items-center justify-between'>
-        <h2 className='mb-1 text-2xl font-bold text-slate-900'>{title}</h2>
-
-        {title === 'Personal' && (
-          <button onClick={handleLock} className='relative -top-1 cursor-pointer fill-slate-600'>
-            {isLocked ? <LockKeyhole /> : <LockKeyholeOpen />}
-          </button>
-        )}
-      </div>
-      {children}
-      <EmailPopup isOpen={isOpen} onClose={handleClose} />
-    </div>
-  );
-}
 
 export function InfoListItem({
   label,
@@ -98,7 +30,7 @@ export function InfoListItem({
     '-mb-1': !metaLabel || (metaLabel && footnote),
   });
 
-  const privateClassName = classNames('text-base text-slate-500 transition-all', {
+  const privateClassName = classNames('overflow-visible text-base text-slate-500 transition-all', {
     'blur-sm': (isPrivate && isLocked) || (label === 'Phone' && !fullAccess),
     'blur-none': !isPrivate || !isLocked,
   });
@@ -114,9 +46,29 @@ export function InfoListItem({
 
       <p className={labelClassName}>{label}</p>
 
-      {!isLink ? (
+      {!isLink && label !== 'E-mail' && label !== 'Phone' && (
         <p className={privateClassName}>{value}</p>
-      ) : (
+      )}
+
+      {label === 'E-mail' &&
+        (!isLocked ? (
+          <a href={`mailto:${value}`} className={privateClassName}>
+            {value}
+          </a>
+        ) : (
+          <p className={privateClassName}>{value}</p>
+        ))}
+
+      {label === 'Phone' &&
+        (fullAccess ? (
+          <a href={`tel:${value}`} className={privateClassName}>
+            {value}
+          </a>
+        ) : (
+          <p className={privateClassName}>{value}</p>
+        ))}
+
+      {isLink && (
         <a
           href={value}
           target='_blank'
