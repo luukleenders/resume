@@ -3,11 +3,22 @@
 import classNames from 'classnames';
 import { motion } from 'motion/react';
 import type { PropsWithChildren } from 'react';
+import { useSwipeable } from 'react-swipeable';
 
 import { useAppStore } from '@provider';
 
 export function Sidebar({ children, className }: PropsWithChildren<{ className?: string }>) {
-  const { isOpen } = useAppStore((state) => state);
+  const { isOpen, setIsOpen } = useAppStore((state) => state);
+
+  const handlers = useSwipeable({
+    onSwiped: ({ dir }) => {
+      if (dir === 'Left') {
+        setIsOpen(false);
+      } else if (dir === 'Right') {
+        setIsOpen(true);
+      }
+    },
+  });
 
   return (
     <motion.div
@@ -18,6 +29,7 @@ export function Sidebar({ children, className }: PropsWithChildren<{ className?:
         'absolute flex h-full w-full max-w-[320px] flex-col overflow-y-auto bg-slate-200 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
         className
       )}
+      {...handlers}
     >
       {children}
     </motion.div>

@@ -2,11 +2,22 @@
 
 import { type PropsWithChildren } from 'react';
 import { motion } from 'motion/react';
+import { useSwipeable } from 'react-swipeable';
 
 import { useAppStore } from '@provider';
 
 export function MainContent({ children }: PropsWithChildren) {
-  const { isOpen, isMobile } = useAppStore((state) => state);
+  const { isOpen, isMobile, setIsOpen } = useAppStore((state) => state);
+
+  const handlers = useSwipeable({
+    onSwiped: ({ dir }) => {
+      if (dir === 'Left') {
+        setIsOpen(false);
+      } else if (dir === 'Right') {
+        setIsOpen(true);
+      }
+    },
+  });
 
   return (
     <motion.div
@@ -17,6 +28,7 @@ export function MainContent({ children }: PropsWithChildren) {
       }}
       transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 1.5 }}
       className='relative flex h-full grow flex-col overflow-y-auto bg-white [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
+      {...handlers}
     >
       {children}
     </motion.div>

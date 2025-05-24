@@ -51,6 +51,7 @@
     "motion": "^12.12.1",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
+    "react-swipeable": "^7.0.2",
     "tailwindcss": "^4",
     "tsx": "^4.19.4",
     "typescript": "^5",
