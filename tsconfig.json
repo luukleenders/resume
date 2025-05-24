@@ -23,6 +23,7 @@
       "@context/*": ["./src/context/*"],
       "@db": ["./src/db"],
       "@db/*": ["./src/db/*"],
+      "@provider": ["./src/provider"],
       "@store": ["./src/store"]
     }
   },

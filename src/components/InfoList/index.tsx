@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { LockKeyhole, LockKeyholeOpen, SquareArrowOutUpRight } from 'lucide-react';
 
 import { EmailPopup } from '@components/EmailPopup';
-import { useDataStore } from '@store';
+import { useAppStore } from '@provider';
 
 type InfoListProps = PropsWithChildren<{
   className?: string;
@@ -22,7 +22,7 @@ type InfoListItemProps = {
 };
 
 export function InfoList({ children, title }: InfoListProps) {
-  const { isLocked, email, setIsLocked } = useDataStore();
+  const { isLocked, email, setIsLocked } = useAppStore((state) => state);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -90,7 +90,7 @@ export function InfoListItem({
   footnote,
   isPrivate,
 }: InfoListItemProps) {
-  const { isLocked } = useDataStore();
+  const { isLocked } = useAppStore((state) => state);
   const isLink = useMemo<boolean>(() => value?.includes('https') ?? false, [value]);
 
   const labelClassName = classNames('text-base font-semibold text-slate-900', {

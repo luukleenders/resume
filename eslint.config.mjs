@@ -59,9 +59,9 @@ const config = [
         {
           groups: [
             ['^\\u0000'],
-            ['^next/(.*)$', '^react$', '^@?\\w'],
+            ['^react$', '^next/(.*)$', '^@?\\w'],
             ['^@', '^'],
-            ['^@components/', '^@context/', '^@db', '^@store'],
+            ['^@components/', '^@context/', '^@db', '^@provider', '^@store'],
             ['^\\./'],
             ['^.+\\.(module.css|module.scss)$'],
             ['^.+\\.(gif|png|svg|jpg)$'],

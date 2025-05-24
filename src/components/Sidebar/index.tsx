@@ -4,10 +4,10 @@ import classNames from 'classnames';
 import { motion } from 'motion/react';
 import type { PropsWithChildren } from 'react';
 
-import { useDataStore } from '@store';
+import { useAppStore } from '@provider';
 
 export function Sidebar({ children, className }: PropsWithChildren<{ className?: string }>) {
-  const { isOpen } = useDataStore();
+  const { isOpen } = useAppStore((state) => state);
 
   return (
     <motion.div

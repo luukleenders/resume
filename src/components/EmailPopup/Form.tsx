@@ -3,7 +3,7 @@ import { Button } from '@headlessui/react';
 
 import { getData } from '@db/getData';
 import type { Personal } from '@db/types';
-import { useDataStore } from '@store';
+import { useAppStore } from '@provider';
 
 type FormProps = {
   isOpen: boolean;
@@ -11,7 +11,7 @@ type FormProps = {
 };
 
 export function Form({ isOpen, onClose }: FormProps) {
-  const { email, setEmail, setIsLocked, setPersonal } = useDataStore();
+  const { email, setEmail, setIsLocked, setPersonal } = useAppStore((state) => state);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const emailRef = useRef<HTMLInputElement>(null);

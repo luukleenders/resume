@@ -6,11 +6,11 @@ import classNames from 'classnames';
 import { SquareArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
 
-import { useDataStore } from '@store';
+import { useAppStore } from '@provider';
 
 export function ToggleButton() {
   const windowSize = useWindowSize();
-  const { isOpen, setIsOpen, setIsMobile } = useDataStore();
+  const { isOpen, setIsOpen, setIsMobile } = useAppStore((state) => state);
   const [buttonX, setButtonX] = useState(296);
 
   const iconClassName = classNames(

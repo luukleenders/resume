@@ -3,10 +3,10 @@
 import { motion } from 'motion/react';
 import type { PropsWithChildren } from 'react';
 
-import { useDataStore } from '@store';
+import { useAppStore } from '@provider';
 
 export function MainContent({ children }: PropsWithChildren) {
-  const { isOpen, isMobile } = useDataStore();
+  const { isOpen, isMobile } = useAppStore((state) => state);
 
   return (
     <motion.div

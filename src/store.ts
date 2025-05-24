@@ -1,13 +1,19 @@
-import { create } from 'zustand';
+import { createStore } from 'zustand';
 
-import type { Personal } from '@db/types';
+import type { Education, Experience, Personal, Skill } from '@db/types';
 
-type DataStore = {
+export type AppState = {
   email: string;
   isLocked: boolean;
   isMobile: boolean;
   isOpen: boolean;
   personal: Personal[];
+  skills: Skill[];
+  education: Education[];
+  experience: Experience[];
+};
+
+export type AppActions = {
   setEmail: (email: string) => void;
   setIsLocked: (isLocked: boolean) => void;
   setIsMobile: (isMobile: boolean) => void;
@@ -15,15 +21,46 @@ type DataStore = {
   setPersonal: (personal: Personal[]) => void;
 };
 
-export const useDataStore = create<DataStore>((set) => ({
+export type AppStore = AppState & AppActions;
+
+export const initAppStore = (
+  isMobile: boolean,
+  skills: Skill[],
+  education: Education[],
+  experience: Experience[],
+  personal: Personal[],
+  session?: { name: string; value: string }
+): AppState => {
+  return {
+    email: session?.value ?? '',
+    isLocked: !session,
+    isMobile,
+    isOpen: !isMobile,
+    personal,
+    skills,
+    education,
+    experience,
+  };
+};
+
+export const defaultInitState: AppState = {
   email: '',
   isLocked: true,
   isMobile: false,
   isOpen: true,
   personal: [],
-  setEmail: (email: string) => set({ email }),
-  setIsLocked: (isLocked: boolean) => set({ isLocked }),
-  setIsMobile: (isMobile: boolean) => set({ isMobile }),
-  setIsOpen: (isOpen: boolean) => set({ isOpen }),
-  setPersonal: (personal: Personal[]) => set({ personal }),
-}));
+  skills: [],
+  education: [],
+  experience: [],
+};
+
+export const createAppStore = (initState: AppState = defaultInitState) => {
+  return createStore<AppStore>()((set) => ({
+    ...initState,
+    setEmail: (email: string) => set({ email }),
+    setIsLocked: (isLocked: boolean) => set({ isLocked }),
+    setIsMobile: (isMobile: boolean) => set({ isMobile }),
+    setIsOpen: (isOpen: boolean) => set({ isOpen }),
+    setPersonal: (personal: Personal[]) => set({ personal }),
+  }));
+};
