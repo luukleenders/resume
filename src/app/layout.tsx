@@ -30,9 +30,12 @@ export default async function RootLayout({
   children: ReactNode;
 }>) {
   const cookieStore = await cookies();
-  const session: Session = JSON.parse(
-    cookieStore.get('session')?.value || '{"email":"","fullAccess":false}'
-  );
+
+  let session: Session = { email: '', fullAccess: false };
+
+  try {
+    session = JSON.parse(cookieStore.get('session')?.value || '{"email":"","fullAccess":false}');
+  } catch {}
 
   const [education, experience, personal, skills] = await Promise.all([
     getData<Education[]>('education'),
