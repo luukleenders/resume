@@ -4,13 +4,15 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Luuk Leenders',
-  description: 'Resume for Luuk Leenders.',
+  title: 'Luuk Leenders | Senior Software Engineer',
+  description:
+    'Digital resume of Luuk Leenders, a Senior Software Engineer specialising in web development',
   openGraph: {
     url: 'https://luuk.leenders.li',
     type: 'website',
-    title: 'Luuk Leenders',
-    description: 'Resume for Luuk Leenders.',
+    title: 'Luuk Leenders | Senior Software Engineer',
+    description:
+      'Digital resume of Luuk Leenders, a Senior Software Engineer specialising in web development',
   },
 };
 

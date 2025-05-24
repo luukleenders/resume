@@ -1,12 +1,14 @@
 'use client';
 
+import classNames from 'classnames';
+
 import type { Experience } from '@db/types';
 
 import { ExperienceItem } from './ExperienceItem';
 
-export function WorkExperience({ data }: { data: Experience[] }) {
+export function WorkExperience({ className, data }: { className?: string; data: Experience[] }) {
   return (
-    <div className='z-10 -mt-[150px] flex flex-col overflow-y-auto px-4 pt-[150px] [scrollbar-width:none] lg:px-8 [&::-webkit-scrollbar]:hidden'>
+    <div className={classNames('flex flex-col px-4 lg:px-8', className)}>
       <h2 className='mb-2 text-2xl font-bold text-slate-900'>Work Experience</h2>
 
       {data.map((item) => (

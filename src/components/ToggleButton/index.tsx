@@ -40,7 +40,7 @@ export function ToggleButton() {
       } else {
         setButtonX(16);
       }
-    } else if (windowSize.width <= 1024) {
+    } else if (windowSize.width < 1024) {
       setIsMobile(true);
 
       if (isOpen) {

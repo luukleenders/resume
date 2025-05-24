@@ -16,7 +16,7 @@ export function MainContent({ children }: PropsWithChildren) {
         x: isOpen ? 320 : 0,
       }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className='relative flex h-full grow flex-col bg-white'
+      className='relative flex h-full grow flex-col overflow-y-auto bg-white [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
     >
       {children}
     </motion.div>

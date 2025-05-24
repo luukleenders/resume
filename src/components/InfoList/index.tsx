@@ -66,7 +66,7 @@ export function InfoList({ children, title }: InfoListProps) {
   }, [isLocked, email, setIsLocked, setIsOpen]);
 
   return (
-    <div className='mb-4'>
+    <div className='mb-4 px-4 lg:px-8'>
       <div className='relative flex flex-row items-center justify-between'>
         <h2 className='mb-1 text-2xl font-bold text-slate-900'>{title}</h2>
 

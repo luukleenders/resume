@@ -29,46 +29,38 @@ export default async function Home() {
         <SessionProvider session={session} />
         <ToggleButton />
 
-        <Sidebar>
-          <div className='relative z-20 flex w-full items-center justify-center bg-slate-200/30 px-4 py-8 backdrop-blur-lg lg:px-8'>
-            <ProfilePicture />
-          </div>
+        <Sidebar className='z-10'>
+          <ProfilePicture className='sticky top-0 z-20' />
+          <PersonalInfo data={personal} />
 
-          <div className='relative z-10 -mt-[150px] flex flex-col overflow-y-auto px-4 pt-[150px] [scrollbar-width:none] lg:px-8 [&::-webkit-scrollbar]:hidden'>
-            <PersonalInfo data={personal} />
+          <InfoList title='Skills'>
+            {skills.map((skill) => (
+              <InfoListItem
+                key={skill.category}
+                label={skill.category}
+                value={skill.items.join(', ')}
+              />
+            ))}
+          </InfoList>
 
-            <InfoList title='Skills'>
-              {skills.map((skill) => (
-                <InfoListItem
-                  key={skill.category}
-                  label={skill.category}
-                  value={skill.items.join(', ')}
-                />
-              ))}
-            </InfoList>
+          <InfoList title='Education'>
+            {education.map((item) => (
+              <InfoListItem
+                key={item.label}
+                label={item.label}
+                footnote={item.footnote}
+                metaLabel={item.metaLabel}
+                metaValue={item.metaValue}
+              />
+            ))}
+          </InfoList>
 
-            <InfoList title='Education'>
-              {education.map((item) => (
-                <InfoListItem
-                  key={item.label}
-                  label={item.label}
-                  footnote={item.footnote}
-                  metaLabel={item.metaLabel}
-                  metaValue={item.metaValue}
-                />
-              ))}
-            </InfoList>
-
-            <div className='min-h-12' />
-          </div>
+          <div className='min-h-12' />
         </Sidebar>
 
         <MainContent>
-          <div className='z-20 flex items-center justify-start bg-white/30 px-4 pt-16 pb-10 backdrop-blur-lg md:pt-16 md:pb-12 lg:px-8 2xl:py-15'>
-            <Title />
-          </div>
-
-          <WorkExperience data={experience} />
+          <Title className='sticky top-0 z-20' />
+          <WorkExperience className='z-10' data={experience} />
         </MainContent>
       </div>
     </div>
