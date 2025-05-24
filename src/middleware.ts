@@ -2,18 +2,16 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const session = request.cookies.get('session');
+  const session = JSON.parse(request.cookies.get('session')?.value || '{}');
 
-  if (
-    session ||
-    !request.nextUrl.pathname.startsWith('/api/') ||
-    !request.nextUrl.searchParams.has('includeEmail=true') ||
-    !request.nextUrl.searchParams.has('includePhone=true')
-  ) {
-    return NextResponse.next();
+  if (request.nextUrl.searchParams.has('includeEmail=true') && !session.email) {
+    return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
-  if (!session) {
+  if (request.nextUrl.searchParams.has('includePhone=true') && !session.fullAccess) {
     return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
       status: 401,
       headers: { 'Content-Type': 'application/json' },

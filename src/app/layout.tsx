@@ -4,12 +4,13 @@ import { cookies } from 'next/headers';
 import type { Metadata as NextMetadata } from 'next';
 import type { ReactNode } from 'react';
 
+import { SessionManager } from '@components/SessionManager';
 import { getData } from '@db/getData';
-import type { Education, Experience, Metadata, Personal, Skill } from '@db/types';
+import type { Education, Experience, Metadata, Personal, Session, Skill } from '@db/types';
 import { AppStoreProvider } from '@provider';
 
 export const generateMetadata = async (): Promise<NextMetadata> => {
-  const metadata = await getData<Metadata[]>('metadata', true);
+  const metadata = await getData<Metadata[]>('metadata');
 
   return {
     title: metadata.find((item) => item.key === 'title')?.value,
@@ -29,13 +30,18 @@ export default async function RootLayout({
   children: ReactNode;
 }>) {
   const cookieStore = await cookies();
-  const session = cookieStore.get('session');
+  const session: Session = JSON.parse(
+    cookieStore.get('session')?.value || '{"email":"","fullAccess":false}'
+  );
 
-  const [skills, education, experience, personal] = await Promise.all([
-    getData<Skill[]>('skills', session?.value ? true : false),
-    getData<Education[]>('education', session?.value ? true : false),
-    getData<Experience[]>('experience', session?.value ? true : false),
-    getData<Personal[]>('personal', session?.value ? true : false),
+  const [education, experience, personal, skills] = await Promise.all([
+    getData<Education[]>('education'),
+    getData<Experience[]>('experience'),
+    getData<Personal[]>('personal', {
+      email: session?.email ? true : false,
+      phone: session?.fullAccess,
+    }),
+    getData<Skill[]>('skills'),
   ]);
 
   return (
@@ -46,9 +52,9 @@ export default async function RootLayout({
           education={education}
           experience={experience}
           personal={personal}
-          session={session}
         >
           {children}
+          <SessionManager session={session} />
         </AppStoreProvider>
       </body>
     </html>

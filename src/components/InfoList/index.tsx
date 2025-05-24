@@ -22,7 +22,7 @@ type InfoListItemProps = {
 };
 
 export function InfoList({ children, title }: InfoListProps) {
-  const { isLocked, email, setIsLocked } = useAppStore((state) => state);
+  const { isLocked, email, setFullAccess, setIsLocked } = useAppStore((state) => state);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -56,6 +56,7 @@ export function InfoList({ children, title }: InfoListProps) {
       }
 
       if (data.isWhitelisted) {
+        setFullAccess(data.fullAccess);
         setIsLocked(false);
       } else {
         setIsOpen(true);
@@ -63,7 +64,7 @@ export function InfoList({ children, title }: InfoListProps) {
     } catch (error) {
       console.error(error);
     }
-  }, [isLocked, email, setIsLocked, setIsOpen]);
+  }, [isLocked, email, setFullAccess, setIsLocked, setIsOpen]);
 
   return (
     <div className='mb-4 px-4 lg:px-8'>
@@ -90,7 +91,7 @@ export function InfoListItem({
   footnote,
   isPrivate,
 }: InfoListItemProps) {
-  const { isLocked } = useAppStore((state) => state);
+  const { fullAccess, isLocked } = useAppStore((state) => state);
   const isLink = useMemo<boolean>(() => value?.includes('https') ?? false, [value]);
 
   const labelClassName = classNames('text-base font-semibold text-slate-900', {
@@ -98,7 +99,7 @@ export function InfoListItem({
   });
 
   const privateClassName = classNames('text-base text-slate-500 transition-all', {
-    'blur-sm': isPrivate && isLocked,
+    'blur-sm': (isPrivate && isLocked) || (label === 'Phone' && !fullAccess),
     'blur-none': !isPrivate || !isLocked,
   });
 

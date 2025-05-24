@@ -43,7 +43,10 @@ export function Form({ isOpen, onClose }: FormProps) {
       }
 
       if (data.isWhitelisted) {
-        const personal = await getData<Personal[]>('personal', true);
+        const personal = await getData<Personal[]>('personal', {
+          email: true,
+          phone: data.fullAccess,
+        });
 
         setEmail(email);
         setPersonal(personal);

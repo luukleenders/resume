@@ -18,10 +18,6 @@ export interface AppStoreProviderProps {
   education: Education[];
   experience: Experience[];
   personal: Personal[];
-  session?: {
-    name: string;
-    value: string;
-  };
 }
 
 export function AppStoreProvider({
@@ -30,13 +26,10 @@ export function AppStoreProvider({
   education,
   experience,
   personal,
-  session,
 }: AppStoreProviderProps) {
   const storeRef = useRef<AppStoreApi | null>(null);
   if (storeRef.current === null) {
-    storeRef.current = createAppStore(
-      initAppStore(skills, education, experience, personal, session)
-    );
+    storeRef.current = createAppStore(initAppStore(education, experience, personal, skills));
   }
 
   return <AppStoreContext.Provider value={storeRef.current}>{children}</AppStoreContext.Provider>;

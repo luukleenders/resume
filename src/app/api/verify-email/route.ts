@@ -16,17 +16,18 @@ export async function POST(request: Request) {
     if (result.length === 0) {
       await db.insert(whitelist).values({
         email,
-        hasAccess: true,
+        hasAccess: false,
       });
 
       result = await db.select().from(whitelist).where(eq(whitelist.email, email)).limit(1);
     }
 
-    const isWhitelisted = result[0]?.hasAccess ?? false;
-    const response = NextResponse.json({ isWhitelisted });
+    const isWhitelisted = result.length > 0;
+    const fullAccess = result[0]?.hasAccess ?? false;
+    const response = NextResponse.json({ isWhitelisted, fullAccess });
 
     if (isWhitelisted) {
-      response.cookies.set('session', email, {
+      response.cookies.set('session', JSON.stringify({ email, fullAccess }), {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
