@@ -7,7 +7,7 @@ import { useSwipeable } from 'react-swipeable';
 import { useAppStore } from '@provider';
 
 export function MainContent({ children }: PropsWithChildren) {
-  const { isOpen, isMobile, setIsOpen } = useAppStore((state) => state);
+  const { isOpen, isMobile, setIsOpen, setHasInteracted } = useAppStore((state) => state);
 
   const handlers = useSwipeable({
     onSwiped: ({ dir }) => {
@@ -16,6 +16,8 @@ export function MainContent({ children }: PropsWithChildren) {
       } else if (dir === 'Right') {
         setIsOpen(true);
       }
+
+      setHasInteracted(true);
     },
   });
 
