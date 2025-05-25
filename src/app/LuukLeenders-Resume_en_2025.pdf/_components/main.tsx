@@ -92,9 +92,25 @@ export default function Main({ experience }: MainProps) {
 
             <View style={{ display: 'flex', flexDirection: 'column' }}>
               {item.bullets.map((bullet) => (
-                <Text key={bullet} style={{ fontSize: 10, fontWeight: 300, lineHeight: 1.2 }}>
-                  • {bullet}
-                </Text>
+                <View
+                  key={bullet}
+                  style={{
+                    position: 'relative',
+                    display: 'flex',
+                    flexDirection: 'row',
+                  }}
+                >
+                  <Text style={{ fontSize: 10, fontWeight: 300, lineHeight: 1.2 }}>• </Text>
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 300,
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    {bullet}
+                  </Text>
+                </View>
               ))}
             </View>
           </View>
