@@ -13,11 +13,11 @@ export function MainContent({ children }: PropsWithChildren) {
     onSwiping: ({ dir }) => {
       if (dir === 'Left') {
         setIsOpen(false);
+        setHasInteracted(true);
       } else if (dir === 'Right') {
         setIsOpen(true);
+        setHasInteracted(true);
       }
-
-      setHasInteracted(true);
     },
   });
 

@@ -14,11 +14,11 @@ export function Sidebar({ children, className }: PropsWithChildren<{ className?:
     onSwiping: ({ dir }) => {
       if (dir === 'Left') {
         setIsOpen(false);
+        setHasInteracted(true);
       } else if (dir === 'Right') {
         setIsOpen(true);
+        setHasInteracted(true);
       }
-
-      setHasInteracted(true);
     },
   });
 
