@@ -2,6 +2,8 @@
 
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   font-family: proxima-nova, sans-serif;
   line-height: 1.5;
@@ -25,7 +27,7 @@ body {
 }
 
 .title {
-  @apply mb-1 text-2xl font-extrabold text-slate-900;
+  @apply mb-1 text-2xl font-extrabold text-slate-900 dark:text-slate-50;
 }
 
 @theme {

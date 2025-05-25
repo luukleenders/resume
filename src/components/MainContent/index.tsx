@@ -29,7 +29,7 @@ export function MainContent({ children }: PropsWithChildren) {
         x: isOpen ? 320 : 0,
       }}
       transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 1.5 }}
-      className='relative flex h-full grow flex-col overflow-y-auto bg-white [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
+      className='relative flex h-full grow flex-col overflow-y-auto bg-slate-50 [scrollbar-width:none] dark:bg-slate-900 [&::-webkit-scrollbar]:hidden'
       {...handlers}
     >
       {children}

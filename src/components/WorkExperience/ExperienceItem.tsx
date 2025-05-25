@@ -26,7 +26,7 @@ export function ExperienceItem({
 
   return (
     <div className='relative mb-4'>
-      <div className='-mb-1 text-xs font-bold text-slate-400'>
+      <div className='-mb-1 text-xs font-bold text-slate-400 dark:text-slate-500'>
         &#9673; {period} |{' '}
         <span className='font-base'>
           {location} -{' '}
@@ -35,7 +35,7 @@ export function ExperienceItem({
               href={url}
               target='_blank'
               rel='noopener noreferrer'
-              className='relative inline-block w-fit after:-bottom-px after:left-0 after:block after:h-px after:w-full after:bg-slate-400 after:opacity-0 after:transition-opacity after:content-[""] hover:after:opacity-100'
+              className='relative inline-block w-fit after:-bottom-px after:left-0 after:block after:h-px after:w-full after:bg-slate-400 after:opacity-0 after:transition-opacity after:content-[""] hover:after:opacity-100 dark:after:bg-slate-500'
             >
               {url.replace('https://', '')}
               <SquareArrowOutUpRight
@@ -50,15 +50,15 @@ export function ExperienceItem({
         </span>
       </div>
 
-      <div className='-mb-1 text-2xl font-semibold text-slate-900'>
+      <div className='-mb-1 text-2xl font-semibold text-slate-900 dark:text-slate-50'>
         {position} @ {company}
       </div>
 
-      <div className='text-base text-slate-900'>
+      <div className='text-base text-slate-900 dark:text-slate-50'>
         <span className='font-semibold'>Tech Stack:</span> {techstack.join(', ')}
       </div>
 
-      <ul className='list-disc pl-4 text-base text-slate-900'>
+      <ul className='list-disc pl-4 text-base text-slate-900 dark:text-slate-50'>
         {bullets.map((bullet) => (
           <li key={bullet}>{bullet}</li>
         ))}

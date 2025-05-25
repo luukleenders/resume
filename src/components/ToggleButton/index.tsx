@@ -18,7 +18,7 @@ export function ToggleButton() {
   const [isShaking, setIsShaking] = useState(false);
 
   const iconClassName = classNames(
-    'h-12 w-12 fill-slate-600 stroke-slate-200 transition-transform duration-300',
+    'h-12 w-12 fill-slate-600 stroke-slate-200 transition-transform duration-300 dark:fill-slate-300 dark:stroke-slate-700',
     {
       'rotate-0': isOpen,
       'rotate-180': !isOpen,

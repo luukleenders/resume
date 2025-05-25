@@ -12,13 +12,13 @@ export function Title({ className }: { className?: string }) {
   return (
     <div
       className={classNames(
-        'box-content flex items-end justify-start bg-white/30 px-4 py-8 backdrop-blur-lg lg:items-center',
+        'box-content flex items-end justify-start bg-white/30 px-4 py-8 backdrop-blur-lg lg:items-center dark:bg-slate-900/30',
         heightClasses,
         className
       )}
     >
       <h1>
-        <span className='flex flex-col text-slate-900'>
+        <span className='flex flex-col text-slate-900 dark:text-slate-50'>
           <span className='-mb-4 text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl'>
             <span className='font-semibold'>curriculum</span>
             <span className='font-light'>vitae</span>

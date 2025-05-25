@@ -21,12 +21,15 @@ export function ProfilePicture({ className }: { className?: string }) {
   return (
     <div
       className={classNames(
-        'flex w-full items-center justify-center bg-slate-200/30 px-4 py-8 backdrop-blur-lg lg:px-8',
+        'flex w-full items-center justify-center bg-slate-200/30 px-4 py-8 backdrop-blur-lg lg:px-8 dark:bg-slate-700/30',
         className
       )}
     >
       <div
-        className={classNames('relative overflow-hidden rounded-full bg-slate-500', heightClasses)}
+        className={classNames(
+          'relative overflow-hidden rounded-full bg-slate-500 dark:bg-slate-400',
+          heightClasses
+        )}
       >
         <Image
           src='/pfp.png'

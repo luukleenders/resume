@@ -9,6 +9,7 @@ export type AppState = {
   isLocked: boolean;
   isMobile: boolean;
   isOpen: boolean;
+  theme: 'light' | 'dark' | 'system';
   personal: Personal[];
   skills: Skill[];
   education: Education[];
@@ -23,6 +24,7 @@ export type AppActions = {
   setIsMobile: (isMobile: boolean) => void;
   setIsOpen: (isOpen: boolean) => void;
   setPersonal: (personal: Personal[]) => void;
+  setTheme: (theme: 'light' | 'dark' | 'system') => void;
 };
 
 export type AppStore = AppState & AppActions;
@@ -34,6 +36,7 @@ export const defaultInitState: AppState = {
   isLocked: true,
   isMobile: true,
   isOpen: false,
+  theme: 'system',
   personal: [],
   skills: [],
   education: [],
@@ -65,5 +68,6 @@ export const createAppStore = (initState: AppState = defaultInitState) => {
     setIsMobile: (isMobile: boolean) => set({ isMobile }),
     setIsOpen: (isOpen: boolean) => set({ isOpen }),
     setPersonal: (personal: Personal[]) => set({ personal }),
+    setTheme: (theme: 'light' | 'dark' | 'system') => set({ theme }),
   }));
 };

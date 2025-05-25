@@ -28,7 +28,7 @@ export function Sidebar({ children, className }: PropsWithChildren<{ className?:
       animate={{ x: isOpen ? 0 : -320 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 1.5 }}
       className={classNames(
-        'absolute flex h-full w-full max-w-[320px] flex-col overflow-y-auto bg-slate-200 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+        'absolute flex h-full w-full max-w-[320px] flex-col overflow-y-auto bg-slate-200 [scrollbar-width:none] dark:bg-slate-700 [&::-webkit-scrollbar]:hidden',
         className
       )}
       {...handlers}

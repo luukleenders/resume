@@ -11,7 +11,7 @@ import { useAppStore } from '@provider';
 
 export function Personal() {
   const [isOpen, setIsOpen] = useState(false);
-  const { personal, isLocked, email, setFullAccess, setIsLocked, setPersonal } = useAppStore(
+  const { personal, isLocked, email, theme, setFullAccess, setIsLocked, setPersonal } = useAppStore(
     (state) => state
   );
 
@@ -67,11 +67,15 @@ export function Personal() {
 
         <div className='relative -top-1 flex flex-row items-center gap-4'>
           <a href='/LuukLeenders-Resume_en_2025.pdf' target='_blank' rel='noopener noreferrer'>
-            <Download stroke='#0f172b' />
+            <Download stroke={theme === 'dark' ? '#f8fafc' : '#0f172b'} />
           </a>
 
           <button onClick={handleLock} className='cursor-pointer'>
-            {isLocked ? <LockKeyhole stroke='#0f172b' /> : <LockKeyholeOpen stroke='#0f172b' />}
+            {isLocked ? (
+              <LockKeyhole stroke={theme === 'dark' ? '#f8fafc' : '#0f172b'} />
+            ) : (
+              <LockKeyholeOpen stroke={theme === 'dark' ? '#f8fafc' : '#0f172b'} />
+            )}
           </button>
         </div>
       </div>
