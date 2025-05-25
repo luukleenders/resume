@@ -3,6 +3,7 @@ import './globals.css';
 import localFont from 'next/font/local';
 import { cookies } from 'next/headers';
 import type { Metadata as NextMetadata } from 'next';
+import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
 
 import { SessionManager } from '@components/SessionManager';
@@ -71,17 +72,24 @@ export default async function RootLayout({
   ]);
 
   return (
-    <html lang='en' className={proximaNova.className}>
+    <html lang='en' className={proximaNova.className} suppressHydrationWarning>
       <body>
-        <AppStoreProvider
-          skills={skills}
-          education={education}
-          experience={experience}
-          personal={personal}
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+          disableTransitionOnChange
         >
-          {children}
-          <SessionManager session={session} />
-        </AppStoreProvider>
+          <AppStoreProvider
+            skills={skills}
+            education={education}
+            experience={experience}
+            personal={personal}
+          >
+            {children}
+            <SessionManager session={session} />
+          </AppStoreProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

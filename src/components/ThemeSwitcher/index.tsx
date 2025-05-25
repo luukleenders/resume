@@ -1,55 +1,39 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Sun } from 'lucide-react';
 import { MoonStar } from 'lucide-react';
-
-import { useAppStore } from '@provider';
+import { useTheme } from 'next-themes';
 
 interface ThemeSwitcherProps {
   className?: string;
 }
 
 export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
-  const { theme, setTheme } = useAppStore((state) => state);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   const buttonClass = classNames('sticky top-8 z-50 w-fit cursor-pointer pl-4 lg:pl-8', className);
   const iconClass = 'stroke-slate-700 transition-transform duration-200 dark:stroke-slate-200';
 
   const handleThemeChange = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
-    document.body.classList.toggle('dark', theme === 'dark');
   };
 
   useEffect(() => {
-    if (theme !== 'system') {
-      localStorage.setItem('theme', theme);
-      document.body.classList.toggle('dark', theme === 'dark');
-      return;
-    }
+    setMounted(true);
+  }, []);
 
-    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
-
-    setTheme(preferredTheme);
-  }, [theme, setTheme]);
-
-  useEffect(() => {
-    const localTheme = localStorage.getItem('theme');
-    if (localTheme) {
-      setTheme(localTheme as 'light' | 'dark' | 'system');
-      document.body.classList.toggle('dark', localTheme === 'dark');
-    }
-  }, [setTheme]);
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <button
       className={buttonClass}
       onClick={handleThemeChange}
       aria-label='Toggle theme'
-      aria-pressed={theme === 'dark'}
       aria-controls='theme'
     >
       {theme === 'dark' ? <MoonStar className={iconClass} /> : <Sun className={iconClass} />}

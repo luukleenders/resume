@@ -1,7 +1,8 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Download, LockKeyhole, LockKeyholeOpen } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 import { EmailPopup } from '@components/EmailPopup';
 import { InfoListItem } from '@components/InfoList';
@@ -10,8 +11,10 @@ import type { Personal as PersonalType } from '@db/types';
 import { useAppStore } from '@provider';
 
 export function Personal() {
+  const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const { personal, isLocked, email, theme, setFullAccess, setIsLocked, setPersonal } = useAppStore(
+  const { theme } = useTheme();
+  const { personal, isLocked, email, setFullAccess, setIsLocked, setPersonal } = useAppStore(
     (state) => state
   );
 
@@ -60,35 +63,41 @@ export function Personal() {
     }
   }, [isLocked, email, setFullAccess, setIsLocked, setIsOpen, setPersonal]);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div>
       <div className='relative flex flex-row items-center justify-between'>
         <h2 className='title'>Personal</h2>
 
-        <div className='relative -top-1 flex flex-row items-center gap-4'>
-          <a
-            href='/LuukLeenders-Resume_en_2025.pdf'
-            aria-label='Download resume'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <Download stroke={theme === 'dark' ? '#f8fafc' : '#0f172b'} />
-          </a>
+        {mounted && (
+          <div className='relative -top-1 flex flex-row items-center gap-4'>
+            <a
+              href='/LuukLeenders-Resume_en_2025.pdf'
+              aria-label='Download resume'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <Download stroke={theme === 'dark' ? '#f8fafc' : '#0f172b'} />
+            </a>
 
-          <button
-            onClick={handleLock}
-            className='cursor-pointer'
-            aria-label='Toggle lock'
-            aria-pressed={isLocked}
-            aria-controls='lock'
-          >
-            {isLocked ? (
-              <LockKeyhole stroke={theme === 'dark' ? '#f8fafc' : '#0f172b'} />
-            ) : (
-              <LockKeyholeOpen stroke={theme === 'dark' ? '#f8fafc' : '#0f172b'} />
-            )}
-          </button>
-        </div>
+            <button
+              onClick={handleLock}
+              className='cursor-pointer'
+              aria-label='Toggle lock'
+              aria-pressed={isLocked}
+              aria-controls='lock'
+            >
+              {isLocked ? (
+                <LockKeyhole stroke={theme === 'dark' ? '#f8fafc' : '#0f172b'} />
+              ) : (
+                <LockKeyholeOpen stroke={theme === 'dark' ? '#f8fafc' : '#0f172b'} />
+              )}
+            </button>
+          </div>
+        )}
       </div>
 
       {personal.map((item) => (
