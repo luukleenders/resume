@@ -2,6 +2,7 @@ import './globals.css';
 
 import localFont from 'next/font/local';
 import { cookies } from 'next/headers';
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata as NextMetadata } from 'next';
 import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
@@ -90,6 +91,7 @@ export default async function RootLayout({
             <SessionManager session={session} />
           </AppStoreProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
