@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useWindowSize } from '@uidotdev/usehooks';
 import classNames from 'classnames';
-import { ArrowRight } from 'lucide-react';
+import { CircleArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 
 import { useAppStore } from '@provider';
@@ -18,9 +18,9 @@ export function ToggleButton() {
   const [isShaking, setIsShaking] = useState(false);
 
   const iconClassName = classNames(
-    'h-12 w-12 stroke-slate-900 transition-transform duration-300 dark:stroke-slate-300',
+    'h-10 w-10 stroke-slate-900 transition-transform duration-300 dark:stroke-slate-300',
     {
-      'rotate-180': isOpen,
+      '-rotate-180': isOpen,
       'rotate-0': !isOpen,
     }
   );
@@ -106,14 +106,14 @@ export function ToggleButton() {
       initial={{ x: isOpen ? 296 : 8 }}
       animate={{ x: buttonX }}
       transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 1.5 }}
-      className='absolute top-4 z-30 cursor-pointer transform-3d'
+      className='absolute top-6 z-30 cursor-pointer transform-3d'
       onClick={handleToggle}
       aria-label='Toggle sidebar'
       aria-expanded={isOpen}
       aria-controls='sidebar'
     >
       <div className={shakeClassName}>
-        <ArrowRight className={iconClassName} />
+        <CircleArrowRight className={iconClassName} />
       </div>
     </motion.button>
   );
