@@ -11,25 +11,27 @@ export async function GET(request: Request) {
   const email = request.headers.get('X-Include-Email');
   const phone = request.headers.get('X-Include-Phone');
 
-  const educationData = await db.select().from(education).orderBy(asc(education.id));
-  const experienceData = await db.select().from(experiences).orderBy(asc(experiences.id));
-  const skillsData = await db.select().from(skills).orderBy(asc(skills.id));
-  const personalData = await db
-    .select({
-      id: personal.id,
-      key: personal.key,
-      value: personal.value,
-      private: personal.private,
-    })
-    .from(personal)
-    .where(
-      and(
-        or(not(eq(personal.key, 'E-mail')), not(eq(personal.key, 'Phone'))),
-        or(not(eq(personal.key, 'E-mail')), eq(sql`${email}`, true)),
-        or(not(eq(personal.key, 'Phone')), eq(sql`${phone}`, true))
+  const [educationData, experienceData, skillsData, personalData] = await Promise.all([
+    db.select().from(education).orderBy(asc(education.id)),
+    db.select().from(experiences).orderBy(asc(experiences.id)),
+    db.select().from(skills).orderBy(asc(skills.id)),
+    db
+      .select({
+        id: personal.id,
+        key: personal.key,
+        value: personal.value,
+        private: personal.private,
+      })
+      .from(personal)
+      .where(
+        or(
+          and(not(eq(personal.key, 'E-mail')), not(eq(personal.key, 'Phone'))),
+          and(eq(personal.key, 'E-mail'), eq(sql`${email}`, true)),
+          and(eq(personal.key, 'Phone'), eq(sql`${phone}`, true))
+        )
       )
-    )
-    .orderBy(asc(personal.id));
+      .orderBy(asc(personal.id)),
+  ]);
 
   const downloadPDF = await ReactPDF.renderToStream(
     <ResumePDF
