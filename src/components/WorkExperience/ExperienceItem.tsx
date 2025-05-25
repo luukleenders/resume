@@ -26,7 +26,7 @@ export function ExperienceItem({
 
   return (
     <div className='relative mb-4'>
-      <div className='-mb-1 text-xs font-bold text-slate-400 dark:text-slate-500'>
+      <div className='-mb-1 text-xs font-semibold text-slate-400 dark:text-slate-500'>
         &#9673; {period} |{' '}
         <span className='font-base'>
           {location} -{' '}
@@ -54,11 +54,11 @@ export function ExperienceItem({
         {position} @ {company}
       </div>
 
-      <div className='text-base text-slate-900 dark:text-slate-50'>
+      <div className='text-base font-light text-slate-900 dark:text-slate-50'>
         <span className='font-semibold'>Tech Stack:</span> {techstack.join(', ')}
       </div>
 
-      <ul className='list-disc pl-4 text-base text-slate-900 dark:text-slate-50'>
+      <ul className='list-disc pl-4 text-base font-light text-slate-900 dark:text-slate-50'>
         {bullets.map((bullet) => (
           <li key={bullet}>{bullet}</li>
         ))}

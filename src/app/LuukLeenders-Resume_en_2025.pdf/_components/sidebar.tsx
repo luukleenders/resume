@@ -41,29 +41,29 @@ const styles = StyleSheet.create({
   value: {
     fontSize: '10pt',
     fontWeight: 300,
-    lineHeight: 1.25,
-    color: slate['500'],
+    lineHeight: 1,
+    color: slate['900'],
   },
   meta: {
     flexDirection: 'row',
-    marginBottom: '-0.5mm',
+    marginBottom: '-1mm',
   },
   metaLabel: {
     fontSize: 8,
     fontWeight: 600,
     lineHeight: 1.25,
-    color: slate['500'],
+    color: slate['900'],
   },
   metaValue: {
     fontSize: 8,
     fontWeight: 300,
     lineHeight: 1.25,
-    color: slate['500'],
+    color: slate['900'],
   },
   footnote: {
     fontSize: 8,
     fontWeight: 300,
-    color: slate['500'],
+    color: slate['900'],
   },
 });
 
@@ -73,7 +73,7 @@ export default function Sidebar({ education, personal, skills }: SidebarProps) {
       <PDFImage style={styles.pfp} src={`${process.env.BASE_URL}/pfp-coloured.png`} />
 
       <View style={{ display: 'flex', flexDirection: 'column', gap: '3mm' }}>
-        <View style={{ display: 'flex', flexDirection: 'column', gap: '0.7mm' }}>
+        <View style={{ display: 'flex', flexDirection: 'column', gap: '2mm' }}>
           <Title style={{ marginBottom: '-2mm' }}>Personal</Title>
 
           {personal.map((item) => (
@@ -84,7 +84,7 @@ export default function Sidebar({ education, personal, skills }: SidebarProps) {
           ))}
         </View>
 
-        <View style={{ display: 'flex', flexDirection: 'column', gap: '0.7mm' }}>
+        <View style={{ display: 'flex', flexDirection: 'column', gap: '2mm' }}>
           <Title style={{ marginBottom: '-2mm' }}>Skills</Title>
 
           {skills.map((item) => (
@@ -95,7 +95,7 @@ export default function Sidebar({ education, personal, skills }: SidebarProps) {
           ))}
         </View>
 
-        <View style={{ display: 'flex', flexDirection: 'column', gap: '0.7mm' }}>
+        <View style={{ display: 'flex', flexDirection: 'column', gap: '2mm' }}>
           <Title style={{ marginBottom: '-2mm' }}>Education</Title>
 
           {education.map((item) => (

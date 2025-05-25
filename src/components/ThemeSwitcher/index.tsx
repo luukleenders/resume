@@ -14,7 +14,7 @@ interface ThemeSwitcherProps {
 export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
   const { theme, setTheme } = useAppStore((state) => state);
 
-  const buttonClass = classNames('sticky top-4 z-50 cursor-pointer pl-4 lg:pl-8', className);
+  const buttonClass = classNames('sticky top-4 z-50 w-fit cursor-pointer pl-4 lg:pl-8', className);
   const iconClass = 'stroke-slate-700 transition-transform duration-200 dark:stroke-slate-200';
 
   const handleThemeChange = () => {

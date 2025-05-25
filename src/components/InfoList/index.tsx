@@ -26,23 +26,20 @@ export function InfoListItem({
   const { fullAccess, isLocked } = useAppStore((state) => state);
   const isLink = useMemo<boolean>(() => value?.includes('https') ?? false, [value]);
 
-  const labelClassName = classNames('text-base font-semibold text-slate-900 dark:text-slate-50', {
+  const labelClassName = classNames('text-base font-semibold', {
     '-mb-1': !metaLabel || (metaLabel && footnote),
   });
 
-  const privateClassName = classNames(
-    'overflow-visible text-base text-slate-500 transition-all dark:text-slate-400',
-    {
-      'blur-sm': (isPrivate && isLocked) || (label === 'Phone' && !fullAccess),
-      'blur-none': !isPrivate || !isLocked,
-    }
-  );
+  const privateClassName = classNames('overflow-visible text-base font-light transition-all', {
+    'blur-sm': (isPrivate && isLocked) || (label === 'Phone' && !fullAccess),
+    'blur-none': !isPrivate || !isLocked,
+  });
 
   return (
     <div className='relative mb-1'>
       {metaLabel && metaValue && (
-        <p className='relative -bottom-1 text-xs text-slate-500 dark:text-slate-400'>
-          <span className='font-semibold text-slate-900 dark:text-slate-50'>{metaLabel} | </span>
+        <p className='relative -bottom-1 text-xs font-light'>
+          <span className='font-semibold'>{metaLabel} | </span>
           {metaValue}
         </p>
       )}
@@ -76,14 +73,17 @@ export function InfoListItem({
           href={value}
           target='_blank'
           rel='noopener noreferrer'
-          className='relative block w-fit text-base text-slate-500 after:-bottom-px after:left-0 after:block after:h-px after:w-full after:bg-slate-500 after:opacity-0 after:transition-opacity after:content-[""] hover:after:opacity-100 dark:text-slate-400 dark:after:bg-slate-400'
+          className={classNames(
+            'relative block w-fit after:-bottom-px after:left-0 after:block after:h-px after:w-full after:bg-slate-500 after:opacity-0 after:transition-opacity after:content-[""] hover:after:opacity-100 dark:after:bg-slate-400',
+            privateClassName
+          )}
         >
           {value?.replace('https://', '')}
           <SquareArrowOutUpRight width={12} height={12} className='absolute top-[7px] -right-4' />
         </a>
       )}
 
-      {footnote && <p className='text-xs text-slate-500 dark:text-slate-400'>{footnote}</p>}
+      {footnote && <p className='text-xs'>{footnote}</p>}
     </div>
   );
 }
