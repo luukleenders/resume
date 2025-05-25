@@ -1,5 +1,6 @@
 import './globals.css';
 
+import localFont from 'next/font/local';
 import { cookies } from 'next/headers';
 import type { Metadata as NextMetadata } from 'next';
 import type { ReactNode } from 'react';
@@ -8,6 +9,31 @@ import { SessionManager } from '@components/SessionManager';
 import { getData } from '@db/getData';
 import type { Education, Experience, Metadata, Personal, Session, Skill } from '@db/types';
 import { AppStoreProvider } from '@provider';
+
+const proximaNova = localFont({
+  src: [
+    {
+      path: '../../public/fonts/proximaNova-regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/proximaNova-light.ttf',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/proximaNova-semibold.ttf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/proximaNova-extrabold.ttf',
+      weight: '800',
+      style: 'normal',
+    },
+  ],
+});
 
 export const generateMetadata = async (): Promise<NextMetadata> => {
   const metadata = await getData<Metadata[]>('metadata');
@@ -45,7 +71,7 @@ export default async function RootLayout({
   ]);
 
   return (
-    <html lang='en'>
+    <html lang='en' className={proximaNova.className}>
       <body>
         <AppStoreProvider
           skills={skills}

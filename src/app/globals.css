@@ -1,5 +1,3 @@
-@import url('https://use.typekit.net/die1owr.css');
-
 @import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
