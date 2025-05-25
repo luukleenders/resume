@@ -20,8 +20,8 @@ export function ToggleButton() {
   const iconClassName = classNames(
     'h-12 w-12 stroke-slate-900 transition-transform duration-300 dark:stroke-slate-300',
     {
-      'rotate-0': isOpen,
-      'rotate-180': !isOpen,
+      'rotate-180': isOpen,
+      'rotate-0': !isOpen,
     }
   );
 
