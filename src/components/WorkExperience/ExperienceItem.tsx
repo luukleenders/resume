@@ -50,7 +50,7 @@ export function ExperienceItem({
         </span>
       </div>
 
-      <div className='-mb-1 text-2xl font-semibold text-slate-900 dark:text-slate-50'>
+      <div className='mt-1 -mb-1 text-2xl leading-none font-semibold text-slate-900 dark:text-slate-50'>
         {position} @ {company}
       </div>
 
