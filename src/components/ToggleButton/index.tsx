@@ -108,6 +108,9 @@ export function ToggleButton() {
       transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 1.5 }}
       className='absolute top-4 z-30 cursor-pointer transform-3d'
       onClick={handleToggle}
+      aria-label='Toggle sidebar'
+      aria-expanded={isOpen}
+      aria-controls='sidebar'
     >
       <div className={shakeClassName}>
         <ArrowRight className={iconClassName} />

@@ -66,11 +66,22 @@ export function Personal() {
         <h2 className='title'>Personal</h2>
 
         <div className='relative -top-1 flex flex-row items-center gap-4'>
-          <a href='/LuukLeenders-Resume_en_2025.pdf' target='_blank' rel='noopener noreferrer'>
+          <a
+            href='/LuukLeenders-Resume_en_2025.pdf'
+            aria-label='Download resume'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             <Download stroke={theme === 'dark' ? '#f8fafc' : '#0f172b'} />
           </a>
 
-          <button onClick={handleLock} className='cursor-pointer'>
+          <button
+            onClick={handleLock}
+            className='cursor-pointer'
+            aria-label='Toggle lock'
+            aria-pressed={isLocked}
+            aria-controls='lock'
+          >
             {isLocked ? (
               <LockKeyhole stroke={theme === 'dark' ? '#f8fafc' : '#0f172b'} />
             ) : (

@@ -45,7 +45,13 @@ export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
   }, [setTheme]);
 
   return (
-    <button className={buttonClass} onClick={handleThemeChange}>
+    <button
+      className={buttonClass}
+      onClick={handleThemeChange}
+      aria-label='Toggle theme'
+      aria-pressed={theme === 'dark'}
+      aria-controls='theme'
+    >
       {theme === 'dark' ? <MoonStar className={iconClass} /> : <Sun className={iconClass} />}
     </button>
   );
