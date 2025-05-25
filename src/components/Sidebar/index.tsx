@@ -11,7 +11,7 @@ export function Sidebar({ children, className }: PropsWithChildren<{ className?:
   const { isOpen, setIsOpen, setHasInteracted } = useAppStore((state) => state);
 
   const handlers = useSwipeable({
-    onSwipeStart: ({ dir }) => {
+    onSwiping: ({ dir }) => {
       if (dir === 'Left') {
         setIsOpen(false);
       } else if (dir === 'Right') {
