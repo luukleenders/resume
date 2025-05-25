@@ -5,11 +5,15 @@ import { Download, LockKeyhole, LockKeyholeOpen } from 'lucide-react';
 
 import { EmailPopup } from '@components/EmailPopup';
 import { InfoListItem } from '@components/InfoList';
+import { getData } from '@db/getData';
+import type { Personal as PersonalType } from '@db/types';
 import { useAppStore } from '@provider';
 
 export function Personal() {
   const [isOpen, setIsOpen] = useState(false);
-  const { personal, isLocked, email, setFullAccess, setIsLocked } = useAppStore((state) => state);
+  const { personal, isLocked, email, setFullAccess, setIsLocked, setPersonal } = useAppStore(
+    (state) => state
+  );
 
   const handleClose = () => {
     setIsOpen(false);
@@ -42,6 +46,10 @@ export function Personal() {
       }
 
       if (data.isWhitelisted) {
+        const session = { email, fullAccess: data.fullAccess };
+        const personal = await getData<PersonalType[]>('personal', session);
+
+        setPersonal(personal);
         setFullAccess(data.fullAccess);
         setIsLocked(false);
       } else {
@@ -50,7 +58,7 @@ export function Personal() {
     } catch (error) {
       console.error(error);
     }
-  }, [isLocked, email, setFullAccess, setIsLocked, setIsOpen]);
+  }, [isLocked, email, setFullAccess, setIsLocked, setIsOpen, setPersonal]);
 
   return (
     <div>
