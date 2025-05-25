@@ -45,10 +45,8 @@ export function Form({ isOpen, onClose }: FormProps) {
       }
 
       if (data.isWhitelisted) {
-        const personal = await getData<Personal[]>('personal', {
-          email: true,
-          phone: data.fullAccess,
-        });
+        const session = { email, fullAccess: data.fullAccess };
+        const personal = await getData<Personal[]>('personal', session);
 
         setEmail(email);
         setFullAccess(data.fullAccess);

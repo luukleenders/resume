@@ -7,9 +7,8 @@ import type { Personal } from '@db/types';
 
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-    const includeEmail = searchParams.get('includeEmail') === 'true';
-    const includePhone = searchParams.get('includePhone') === 'true';
+    const includeEmail = request.headers.get('X-Include-Email');
+    const includePhone = request.headers.get('X-Include-Phone');
 
     const data: Personal[] = await db
       .select({

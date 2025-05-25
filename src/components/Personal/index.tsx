@@ -9,9 +9,7 @@ import { useAppStore } from '@provider';
 
 export function Personal() {
   const [isOpen, setIsOpen] = useState(false);
-  const { personal, isLocked, email, pdfUrl, setFullAccess, setIsLocked } = useAppStore(
-    (state) => state
-  );
+  const { personal, isLocked, email, setFullAccess, setIsLocked } = useAppStore((state) => state);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -60,11 +58,9 @@ export function Personal() {
         <h2 className='title'>Personal</h2>
 
         <div className='relative -top-1 flex flex-row items-center gap-4'>
-          {pdfUrl && (
-            <a href={pdfUrl} target='_blank' rel='noopener noreferrer'>
-              <Download stroke='#0f172b' />
-            </a>
-          )}
+          <a href='/LuukLeenders-Resume_en_2025.pdf' target='_blank' rel='noopener noreferrer'>
+            <Download stroke='#0f172b' />
+          </a>
 
           <button onClick={handleLock} className='cursor-pointer'>
             {isLocked ? <LockKeyhole stroke='#0f172b' /> : <LockKeyholeOpen stroke='#0f172b' />}

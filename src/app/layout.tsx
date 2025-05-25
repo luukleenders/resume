@@ -40,10 +40,7 @@ export default async function RootLayout({
   const [education, experience, personal, skills] = await Promise.all([
     getData<Education[]>('education'),
     getData<Experience[]>('experience'),
-    getData<Personal[]>('personal', {
-      email: session?.email ? true : false,
-      phone: session?.fullAccess,
-    }),
+    getData<Personal[]>('personal', session),
     getData<Skill[]>('skills'),
   ]);
 

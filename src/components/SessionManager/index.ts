@@ -10,7 +10,7 @@ interface SessionManagerProps {
 }
 
 export function SessionManager({ session }: SessionManagerProps) {
-  const { setEmail, setFullAccess, setIsLocked, setPdfUrl } = useAppStore((state) => state);
+  const { setEmail, setFullAccess, setIsLocked } = useAppStore((state) => state);
   const { email, fullAccess } = session;
 
   useEffect(() => {
@@ -23,18 +23,6 @@ export function SessionManager({ session }: SessionManagerProps) {
       setFullAccess(fullAccess);
     }
   }, [email, fullAccess, setEmail, setFullAccess, setIsLocked]);
-
-  useEffect(() => {
-    const fetchPdfUrl = async () => {
-      const response = await fetch(`/api/pdf?includeEmail=${!!email}&includePhone=${fullAccess}`);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-
-      setPdfUrl(url);
-    };
-
-    fetchPdfUrl();
-  }, [email, fullAccess, setPdfUrl]);
 
   return null;
 }

@@ -1,28 +1,40 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-export function middleware(request: NextRequest) {
+import type { Session } from '@db/types';
+
+export async function middleware(request: NextRequest) {
   try {
     if (request.nextUrl.pathname.startsWith('/api/verify-email')) {
       return NextResponse.next();
     }
 
-    const session = JSON.parse(request.cookies.get('session')?.value || '{}');
-    if (request.nextUrl.searchParams.has('includeEmail=true') && !session.email) {
+    let session: Session = { email: '', fullAccess: false };
+    if (request.cookies.has('session')) {
+      session = JSON.parse(request.cookies.get('session')?.value || '{}');
+    }
+
+    if (request.headers.get('X-Include-Email') === 'true' && !session.email) {
       return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
         status: 401,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    if (request.nextUrl.searchParams.has('includePhone=true') && !session.fullAccess) {
+    if (request.headers.get('X-Include-Phone') === 'true' && !session.fullAccess) {
       return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
         status: 401,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    return NextResponse.next();
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('X-Include-Email', `${!!session.email}`);
+    requestHeaders.set('X-Include-Phone', `${!!session.fullAccess}`);
+
+    return NextResponse.next({
+      request: { headers: requestHeaders },
+    });
   } catch {
     const response = new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
       status: 401,
@@ -36,5 +48,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: '/api/:path*',
+  matcher: '/((?!_next/static|_next/image|favicon.ico).*)',
 };
