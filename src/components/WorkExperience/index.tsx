@@ -19,7 +19,7 @@ export function WorkExperience({ className }: { className?: string }) {
         ))}
       </div>
 
-      <div className='min-h-12' />
+      <div className='min-h-16' />
     </section>
   );
 }

@@ -25,7 +25,7 @@ export default async function Home() {
             <Education />
           </div>
 
-          <div className='min-h-12' />
+          <div className='min-h-16' />
         </Sidebar>
 
         <MainContent>
