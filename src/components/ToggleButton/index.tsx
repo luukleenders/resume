@@ -96,7 +96,7 @@ export function ToggleButton() {
       if (isOpen) {
         setButtonX(296);
       } else {
-        setButtonX(16);
+        setButtonX(32);
       }
     }
   }, [windowSize.width, isOpen, setIsOpen, setIsMobile]);
