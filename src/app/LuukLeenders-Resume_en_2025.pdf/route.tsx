@@ -33,7 +33,7 @@ export async function GET(request: Request) {
       return new NextResponse(buffer, {
         headers: {
           'Content-Type': 'application/pdf',
-          'Content-Disposition': 'inline; filename="resume.pdf"',
+          'Content-Disposition': 'inline; filename="LuukLeenders-Resume_en_2025.pdf"',
         },
       });
     }
