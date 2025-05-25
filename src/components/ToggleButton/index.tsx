@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useWindowSize } from '@uidotdev/usehooks';
 import classNames from 'classnames';
-import { SquareArrowLeft } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 
 import { useAppStore } from '@provider';
@@ -18,7 +18,7 @@ export function ToggleButton() {
   const [isShaking, setIsShaking] = useState(false);
 
   const iconClassName = classNames(
-    'h-12 w-12 fill-slate-600 stroke-slate-200 transition-transform duration-300 dark:fill-slate-300 dark:stroke-slate-700',
+    'h-12 w-12 stroke-slate-900 transition-transform duration-300 dark:stroke-slate-300',
     {
       'rotate-0': isOpen,
       'rotate-180': !isOpen,
@@ -110,7 +110,7 @@ export function ToggleButton() {
       onClick={handleToggle}
     >
       <div className={shakeClassName}>
-        <SquareArrowLeft className={iconClassName} />
+        <ArrowRight className={iconClassName} />
       </div>
     </motion.button>
   );
