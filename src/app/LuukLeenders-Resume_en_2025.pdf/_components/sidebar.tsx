@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
   },
   pfp: {
     marginTop: '5mm',
-    width: '40mm',
-    height: '40mm',
+    width: '35mm',
+    height: '35mm',
     marginLeft: 'auto',
     marginRight: 'auto',
   },
@@ -79,7 +79,7 @@ export default function Sidebar({ education, personal, skills }: SidebarProps) {
           {personal.map((item) => (
             <View key={item.id}>
               <Text style={styles.label}>{item.key}</Text>
-              <Text style={styles.value}>{item.value}</Text>
+              <Text style={styles.value}>{item.value.replace(/^https?:\/\//, '')}</Text>
             </View>
           ))}
         </View>
