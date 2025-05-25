@@ -25,7 +25,7 @@ export function ExperienceItem({
   const isLink = useMemo<boolean>(() => url?.includes('https') ?? false, [url]);
 
   return (
-    <div className='relative mb-4'>
+    <div className='relative'>
       <div className='-mb-1 text-xs font-semibold text-slate-400 dark:text-slate-500'>
         &#9673; {period} |{' '}
         <span className='font-base'>

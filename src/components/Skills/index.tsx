@@ -10,9 +10,15 @@ export function Skills() {
     <section>
       <h2 className='title'>Skills</h2>
 
-      {skills.map((skill) => (
-        <InfoListItem key={skill.category} label={skill.category} value={skill.items.join(', ')} />
-      ))}
+      <div className='flex flex-col gap-1'>
+        {skills.map((skill) => (
+          <InfoListItem
+            key={skill.category}
+            label={skill.category}
+            value={skill.items.join(', ')}
+          />
+        ))}
+      </div>
     </section>
   );
 }

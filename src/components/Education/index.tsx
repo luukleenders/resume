@@ -10,15 +10,17 @@ export function Education() {
     <section>
       <h2 className='title'>Education</h2>
 
-      {education.map((item) => (
-        <InfoListItem
-          key={item.label}
-          label={item.label}
-          footnote={item.footnote}
-          metaLabel={item.metaLabel}
-          metaValue={item.metaValue}
-        />
-      ))}
+      <div className='flex flex-col gap-1'>
+        {education.map((item) => (
+          <InfoListItem
+            key={item.label}
+            label={item.label}
+            footnote={item.footnote}
+            metaLabel={item.metaLabel}
+            metaValue={item.metaValue}
+          />
+        ))}
+      </div>
     </section>
   );
 }

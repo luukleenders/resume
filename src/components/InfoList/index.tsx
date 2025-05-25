@@ -36,7 +36,7 @@ export function InfoListItem({
   });
 
   return (
-    <div className='relative mb-1'>
+    <div className='relative'>
       {metaLabel && metaValue && (
         <p className='relative -bottom-1 text-xs font-light'>
           <span className='font-semibold'>{metaLabel} | </span>

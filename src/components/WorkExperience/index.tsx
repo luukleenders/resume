@@ -13,9 +13,11 @@ export function WorkExperience({ className }: { className?: string }) {
     <section className={classNames('flex flex-col px-4 lg:px-8', className)}>
       <h2 className='title'>Work Experience</h2>
 
-      {experience.map((item) => (
-        <ExperienceItem key={item.company} {...item} />
-      ))}
+      <div className='flex flex-col gap-4'>
+        {experience.map((item) => (
+          <ExperienceItem key={item.company} {...item} />
+        ))}
+      </div>
 
       <div className='min-h-12' />
     </section>

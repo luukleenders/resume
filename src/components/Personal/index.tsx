@@ -100,14 +100,16 @@ export function Personal() {
         )}
       </div>
 
-      {personal.map((item) => (
-        <InfoListItem
-          key={item.key}
-          label={item.key}
-          value={Array.isArray(item.value) ? item.value.join(', ') : item.value}
-          isPrivate={item.private}
-        />
-      ))}
+      <div className='flex flex-col gap-1'>
+        {personal.map((item) => (
+          <InfoListItem
+            key={item.key}
+            label={item.key}
+            value={Array.isArray(item.value) ? item.value.join(', ') : item.value}
+            isPrivate={item.private}
+          />
+        ))}
+      </div>
 
       <EmailPopup isOpen={isOpen} onClose={handleClose} />
     </section>
