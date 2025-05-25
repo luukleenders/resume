@@ -29,6 +29,7 @@ export async function middleware(request: NextRequest) {
     }
 
     const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('X-Email', session.email);
     requestHeaders.set('X-Include-Email', `${!!session.email}`);
     requestHeaders.set('X-Include-Phone', `${!!session.fullAccess}`);
 

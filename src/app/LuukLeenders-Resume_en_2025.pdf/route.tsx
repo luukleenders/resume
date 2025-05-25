@@ -4,17 +4,20 @@ import { list, put } from '@vercel/blob';
 import { and, asc, eq, not, or, sql } from 'drizzle-orm';
 
 import { db } from '@db';
-import { education, experiences, personal, skills } from '@db/schema';
+import { downloads, education, experiences, personal, skills } from '@db/schema';
 
 import ResumePDF from './_components/layout';
 
 export async function GET(request: Request) {
+  const emailAddress = request.headers.get('X-Email');
   const email = request.headers.get('X-Include-Email');
   const phone = request.headers.get('X-Include-Phone');
 
   let pathName = 'public/LuukLeenders-Resume_en_2025';
   if (email === 'true') pathName = `limited/LuukLeenders-Resume_en_2025`;
   if (phone === 'true') pathName = `full/LuukLeenders-Resume_en_2025`;
+
+  await db.insert(downloads).values({ email: emailAddress || null });
 
   try {
     const { blobs } = await list();
