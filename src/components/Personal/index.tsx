@@ -68,7 +68,7 @@ export function Personal() {
   }, []);
 
   return (
-    <div>
+    <section>
       <div className='relative flex flex-row items-center justify-between'>
         <h2 className='title'>Personal</h2>
 
@@ -110,6 +110,6 @@ export function Personal() {
       ))}
 
       <EmailPopup isOpen={isOpen} onClose={handleClose} />
-    </div>
+    </section>
   );
 }

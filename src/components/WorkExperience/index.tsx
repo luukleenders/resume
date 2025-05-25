@@ -10,7 +10,7 @@ export function WorkExperience({ className }: { className?: string }) {
   const { experience } = useAppStore((state) => state);
 
   return (
-    <div className={classNames('flex flex-col px-4 lg:px-8', className)}>
+    <section className={classNames('flex flex-col px-4 lg:px-8', className)}>
       <h2 className='title'>Work Experience</h2>
 
       {experience.map((item) => (
@@ -18,6 +18,6 @@ export function WorkExperience({ className }: { className?: string }) {
       ))}
 
       <div className='min-h-12' />
-    </div>
+    </section>
   );
 }

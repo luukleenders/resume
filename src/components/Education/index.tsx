@@ -7,7 +7,7 @@ export function Education() {
   const { education } = useAppStore((state) => state);
 
   return (
-    <div>
+    <section>
       <h2 className='title'>Education</h2>
 
       {education.map((item) => (
@@ -19,6 +19,6 @@ export function Education() {
           metaValue={item.metaValue}
         />
       ))}
-    </div>
+    </section>
   );
 }

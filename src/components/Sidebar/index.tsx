@@ -23,7 +23,7 @@ export function Sidebar({ children, className }: PropsWithChildren<{ className?:
   });
 
   return (
-    <motion.div
+    <motion.aside
       initial={{ x: isOpen ? 0 : -320 }}
       animate={{ x: isOpen ? 0 : -320 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 1.5 }}
@@ -34,6 +34,6 @@ export function Sidebar({ children, className }: PropsWithChildren<{ className?:
       {...handlers}
     >
       {children}
-    </motion.div>
+    </motion.aside>
   );
 }

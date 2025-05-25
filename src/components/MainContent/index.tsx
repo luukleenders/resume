@@ -22,7 +22,7 @@ export function MainContent({ children }: PropsWithChildren) {
   });
 
   return (
-    <motion.div
+    <motion.main
       initial={{ maxWidth: `calc(100% - ${isMobile ? '0px' : '320px'})`, x: isOpen ? 320 : 0 }}
       animate={{
         maxWidth: isOpen ? `calc(100% - ${isMobile ? '0px' : '320px'})` : 'calc(100% - 0px)',
@@ -33,6 +33,6 @@ export function MainContent({ children }: PropsWithChildren) {
       {...handlers}
     >
       {children}
-    </motion.div>
+    </motion.main>
   );
 }
