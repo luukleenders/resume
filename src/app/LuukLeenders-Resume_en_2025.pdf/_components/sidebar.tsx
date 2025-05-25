@@ -73,8 +73,8 @@ export default function Sidebar({ education, personal, skills }: SidebarProps) {
       <PDFImage style={styles.pfp} src={`${process.env.BASE_URL}/pfp-coloured.png`} />
 
       <View style={{ display: 'flex', flexDirection: 'column', gap: '3mm' }}>
-        <View style={{ display: 'flex', flexDirection: 'column', gap: '2mm' }}>
-          <Title style={{ marginBottom: '-2mm' }}>Personal</Title>
+        <View style={{ display: 'flex', flexDirection: 'column', gap: '1.75mm' }}>
+          <Title style={{ marginBottom: '-3.5mm' }}>Personal</Title>
 
           {personal.map((item) => (
             <View key={item.id}>
@@ -84,8 +84,8 @@ export default function Sidebar({ education, personal, skills }: SidebarProps) {
           ))}
         </View>
 
-        <View style={{ display: 'flex', flexDirection: 'column', gap: '2mm' }}>
-          <Title style={{ marginBottom: '-2mm' }}>Skills</Title>
+        <View style={{ display: 'flex', flexDirection: 'column', gap: '1.75mm' }}>
+          <Title style={{ marginBottom: '-3.5mm' }}>Skills</Title>
 
           {skills.map((item) => (
             <View key={item.id}>
@@ -95,8 +95,8 @@ export default function Sidebar({ education, personal, skills }: SidebarProps) {
           ))}
         </View>
 
-        <View style={{ display: 'flex', flexDirection: 'column', gap: '2mm' }}>
-          <Title style={{ marginBottom: '-2mm' }}>Education</Title>
+        <View style={{ display: 'flex', flexDirection: 'column', gap: '1.75mm' }}>
+          <Title style={{ marginBottom: '-3.5mm' }}>Education</Title>
 
           {education.map((item) => (
             <View key={item.id}>

@@ -70,7 +70,7 @@ export default function Main({ experience }: MainProps) {
               />{' '}
               <Text style={{ fontWeight: 600 }}>{item.period} | </Text>
               <Text style={{ fontWeight: 300 }}>
-                {item.location} - {item.url}
+                {item.location} - {item.url.replace('https://', '')}
               </Text>
             </Text>
 
