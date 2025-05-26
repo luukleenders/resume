@@ -15,22 +15,22 @@ import { AppStoreProvider } from '@provider';
 const proximaNova = localFont({
   src: [
     {
-      path: '../../public/fonts/proximaNova-regular.ttf',
+      path: '../../public/fonts/proximaNova-regular.woff2',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/proximaNova-light.ttf',
+      path: '../../public/fonts/proximaNova-light.woff2',
       weight: '300',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/proximaNova-semibold.ttf',
+      path: '../../public/fonts/proximaNova-semibold.woff2',
       weight: '600',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/proximaNova-extrabold.ttf',
+      path: '../../public/fonts/proximaNova-extrabold.woff2',
       weight: '800',
       style: 'normal',
     },
