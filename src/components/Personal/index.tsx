@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Download, LockKeyhole, LockKeyholeOpen } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
@@ -74,14 +75,14 @@ export function Personal() {
 
         {mounted && (
           <div className='relative -top-1 flex flex-row items-center gap-4'>
-            <a
+            <Link
               href='/LuukLeenders-Resume_en_2025.pdf'
               aria-label='Download resume'
               target='_blank'
               rel='noopener noreferrer'
             >
               <Download stroke={theme === 'dark' ? '#f8fafc' : '#0f172b'} />
-            </a>
+            </Link>
 
             <button
               onClick={handleLock}
